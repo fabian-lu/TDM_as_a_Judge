@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Typed Decision Models as Judges</title>
+  <meta name="description" content="We run the CALM bias tests on eight typed decision models (TDMs) and seven LLM judges. Every TDM is biased, more than 2026 LLM judges, although TDMs are far cheaper and more consistent.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #1d2129; --muted: #5b6270; --accent: #1f6fb2; --accent2: #6e40c9; --soft: #f5f7fa; --line: #e3e6eb; }
+    body { font-family: 'Noto Sans', sans-serif; color: var(--ink); background: #ffffff; }
+    .publication-title { font-family: 'Source Serif 4', serif; font-weight: 700; line-height: 1.2; }
+    .publication-authors { font-size: 1.15rem; margin-top: 0.6rem; }
+    .publication-authors a { color: var(--accent); }
+    .affil { color: var(--muted); font-size: 0.98rem; margin-top: 0.25rem; }
+    .link-block { margin: 0.25rem; }
+    .button.is-dark { background-color: #2b2f36; }
+    .button.is-web { background-color: var(--accent); color: #fff; border: none; }
+    .button.is-code { background-color: var(--accent2); color: #fff; border: none; }
+    .section-title { font-family: 'Source Serif 4', serif; font-weight: 700; font-size: 1.6rem; margin-bottom: 0.9rem; }
+    .tldr { background: var(--soft); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; border-radius: 4px; font-size: 1.05rem; }
+    .content p, .content li { line-height: 1.65; }
+    figure.paper-fig { margin: 1.2rem 0 0.4rem; }
+    figure.paper-fig img { width: 100%; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+    figure.paper-fig figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 0.5rem; }
+    .finding { border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1.1rem; height: 100%; background: #fff; }
+    .finding h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .finding .num { color: var(--accent); font-weight: 700; }
+    pre.bibtex { background: var(--soft); border: 1px solid var(--line); font-size: 0.85rem; white-space: pre-wrap; }
+    footer.footer { background: var(--soft); padding: 2rem 1.5rem; color: var(--muted); font-size: 0.9rem; }
+    @media (max-width: 768px) { .publication-title { font-size: 1.8rem !important; } }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-2 publication-title">Cheap, Consistent, Calibrated, but Biased?<br>Typed Decision Models as Judges</h1>
+      <div class="publication-authors">
+        Fabian Lukassen<sup>1</sup>, &nbsp; Christoph Weisser<sup>2</sup>, &nbsp; Alexander Silbersdorff<sup>1</sup>
+      </div>
+      <div class="affil"><sup>1</sup>University of Göttingen &nbsp;&nbsp; <sup>2</sup>Bielefeld University of Applied Sciences and Arts (HSBI)</div>
+      <div class="publication-links" style="margin-top: 1.2rem;">
+        <span class="link-block"><a href="paper.pdf" class="button is-dark is-rounded"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+        <span class="link-block"><a class="button is-dark is-rounded" disabled title="coming soon"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv (soon)</span></a></span>
+        <span class="link-block"><a href="https://github.com/fabian-lu/TDM_as_a_Judge" class="button is-code is-rounded"><span class="icon"><i class="fab fa-github"></i></span><span>Code and data</span></a></span>
+        <span class="link-block"><a href="#bibtex" class="button is-web is-rounded"><span class="icon"><i class="fas fa-quote-right"></i></span><span>BibTeX</span></a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop">
+    <div class="tldr"><strong>TL;DR.</strong> We run the bias tests of the CALM benchmark on eight typed decision models (TDMs) and seven LLM judges. Every TDM is biased, and more so than the LLM judges of 2026, although TDMs are far cheaper and more consistent.</div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop content">
+    <h2 class="section-title has-text-centered">Abstract</h2>
+    <p>Typed decision models (TDMs) return a probability for each allowed answer instead of generating text, which makes them candidates for cheaply replacing LLM judges that compare two answers. Whether they share the biases of LLM judges is untested. We run the CALM benchmark's bias tests on eight TDMs and seven LLM judges of 2024 and 2026. Every TDM is biased, in three to eight of twelve tests. Emotional tone affects them most, and rewriting the better answer in such a tone lowers the accuracy of a typical TDM from 99% to 42%. TDMs are more biased than 2026 LLM judges. All eight change verdicts when the answers swap places, which the 2026 LLM judges hardly do, and several side with an answer that most people allegedly prefer or that a famous model allegedly wrote. Yet both kinds of judge are tripped up by the same prompts. The TDMs' probabilities show that most tests mainly flip verdicts the TDM was unsure of, and that good calibration does not protect against bias. As TDMs are more consistent and 37 times cheaper than 2026 LLM judges, our results suggest they can be attractive judges if their biases are tested for the task.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">Every TDM is biased</h2>
+    <figure class="paper-fig">
+      <img src="static/img/heatmap.png" alt="Heatmap of the excess per judge and test, with the number of biased tests per judge">
+      <figcaption>Excess (changed verdicts per 100 beyond chance) of every judge in every test. Framed cells are biases, whose whole 95% interval lies above 5. Right: number of tests with a bias per judge. † Our additions to CALM.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">Main findings</h2>
+    <div class="columns is-multiline">
+      <div class="column is-half"><div class="finding"><h3>Biased in every model</h3><p>Each of the eight TDMs is biased in <span class="num">3 to 8</span> of the twelve tests, and sentiment and position bias all of them. Which test is run matters more than which TDM is tested.</p></div></div>
+      <div class="column is-half"><div class="finding"><h3>More biased than 2026 LLM judges</h3><p>Position, a claimed majority and a famous model's name bias several TDMs but <span class="num">no</span> 2026 LLM judge. Under emotional tone and a fake citation on the better answer, both kinds are about equally biased.</p></div></div>
+      <div class="column is-half"><div class="finding"><h3>Tripped up by the same prompts</h3><p>The prompts that make TDMs flip are the ones that make LLM judges flip (correlation of the prompt effects <span class="num">0.95</span>). Part of what a test measures lies in its prompts.</p></div></div>
+      <div class="column is-half"><div class="finding"><h3>Where a cue sits decides the harm</h3><p>A fake citation on the worse answer raises the median TDM's accuracy from 0.66 to 0.81, but on the better answer it lowers it to <span class="num">0.41</span>. Tests with cues on the worse answer only miss this.</p></div></div>
+      <div class="column is-half"><div class="finding"><h3>Probabilities show more than verdicts</h3><p>Cues move the probability by more than 0.10 without flipping the verdict on <span class="num">19 to 24%</span> of prompts. They mostly flip close calls, and good calibration does not protect against bias.</p></div></div>
+      <div class="column is-half"><div class="finding"><h3>Cheap and consistent</h3><p>At the median, a 2026 LLM judge costs <span class="num">37 times</span> as much as a TDM and takes six times as long, and most TDMs repeat almost every verdict.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">What the probabilities show</h2>
+    <figure class="paper-fig">
+      <img src="static/img/probabilities.png" alt="Shift in the probability per test, flipped and hidden prompts, and flips by confidence">
+      <figcaption>(a) Mean shift in the probability of the response a cue targets. (b) Prompts on which the median TDM's verdict flips, or stays while its probability moves by more than 0.10. (c) Flipped verdicts by the confidence on the original prompt. † Our additions to CALM. Fallacy oversight is left out.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop content">
+    <h2 class="section-title has-text-centered">Replacing an LLM judge with a TDM?</h2>
+    <p>The paper's appendix gives a short guide for practitioners. In brief:</p>
+    <ul>
+      <li><strong>Ask in both orders</strong> and average the two probabilities. This removes the position bias and doubles the cost.</li>
+      <li><strong>Remove cues the task does not need</strong>, such as claimed majorities, popularity counts and model names.</li>
+      <li><strong>Do not expect a TDM to handle tone and citations better.</strong> Both kinds of judge punish an emotional tone and a fake citation even on the better answer.</li>
+      <li><strong>Treat close calls as uncertain</strong> and pass them to a second judge. A high probability does not protect against a tone or a citation on the better answer.</li>
+      <li><strong>Test again after an update.</strong> TDMs are new and change quickly. With our code, a full bias test of one TDM costs US$0.26 to 3.11.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="bibtex" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop content">
+    <h2 class="section-title">BibTeX</h2>
+    <pre class="bibtex"><code>@misc{lukassen2026tdmjudge,
+  title  = {Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges},
+  author = {Lukassen, Fabian and Weisser, Christoph and Silbersdorff, Alexander},
+  year   = {2026},
+  note   = {Preprint}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container is-max-desktop has-text-centered">
+    <p>Built on the CALM benchmark (<a href="https://llm-judge-bias.github.io/">Ye et al., 2025</a>). Code and derived data are released under the MIT and CC BY-NC-SA 4.0 licences.</p>
+  </div>
+</footer>
+
+</body>
+</html>
