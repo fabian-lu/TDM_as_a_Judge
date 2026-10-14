@@ -6,7 +6,7 @@
 <title>Typed Decision Models as Judges</title>
 <meta name="description" content="We run the bias tests of the CALM benchmark on eight typed decision models and seven LLM judges. Every TDM is biased, in some tests more than the LLM judges of 2026, although TDMs are far cheaper and more consistent.">
 <meta property="og:title" content="Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges">
-<meta property="og:description" content="The bias tests of CALM on eight typed decision models and seven LLM judges: interactive results, the benchmark and the code.">
+<meta property="og:description" content="The bias tests of CALM on eight typed decision models and seven LLM judges: results, examples, the benchmark and the code.">
 <meta property="og:image" content="https://fabian-lu.github.io/TDM_as_a_Judge/assets/fig/excess_heatmap.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#f5f0e6">
@@ -20,21 +20,18 @@
 
 <nav class="nav" id="nav" aria-label="Sections">
   <div class="nav-inner">
-    <a class="nav-title" href="#top">TDMs as Judges <span>· bias tests</span></a>
+    <a class="nav-title" href="#top">Typed Decision Models as Judges</a>
     <div class="nav-links">
-      <a href="#question">Question</a>
+      <a href="#motivation">Motivation</a>
       <a href="#method">Method</a>
-      <a href="#findings">Findings</a>
-      <a href="#example">Example</a>
-      <a href="#appendix">Appendix</a>
-      <a href="#guide">Guide</a>
+      <a href="#results">Results</a>
+      <a href="#further">Further results</a>
+      <a href="#recommendations">Recommendations</a>
       <a href="#benchmark">Benchmark</a>
-      <a href="#cite">Cite</a>
-      <a href="#research">Research</a>
+      <a href="#figures">Figures</a>
+      <a href="#cite">Citation</a>
     </div>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch between light and dark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/></svg>
-    </button>
+    <a class="nav-paper" href="https://arxiv.org/abs/2610.18122">Paper</a>
   </div>
 </nav>
 
@@ -60,20 +57,48 @@
           <a class="btn" href="#cite">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 17.5V12c0-3 1.5-5 4.5-5.5M5 12h4.5v5.5H5M14 17.5V12c0-3 1.5-5 4.5-5.5M14 12h4.5v5.5H14"/></svg>Cite</a>
         </div>
-        <p class="lead">Typed decision models answer a question by returning a probability for each allowed option, which makes them fast and cheap judges. We test whether they share the biases of LLM judges. They do, and in several tests more than the LLM judges of 2026.</p>
+        <p class="lead">Typed decision models (TDMs) answer a question by returning a probability for each allowed option, which makes them fast and cheap judges. We test whether they share the biases of LLM judges. They do, and in several tests more than the LLM judges of 2026.</p>
       </div>
 
-      <figure class="scale-card" aria-labelledby="scale-title">
-        <span class="fig-label">Interactive · median of eight TDMs</span>
-        <p class="scale-q" id="scale-title">Add a cue that should not matter. Where does the probability go?</p>
-        <svg id="scale" viewBox="0 0 520 260" role="img" aria-label="A balance that tilts by the mean shift of the median TDM under the selected cue"></svg>
-        <div class="scale-readout" id="scale-readout" aria-live="polite"></div>
-        <div class="chips" id="scale-chips" role="group" aria-label="Cue"></div>
-      </figure>
+      <div class="hero-side">
+        <figure class="scale-card" aria-labelledby="scale-title">
+          <p class="scale-q" id="scale-title">Effect of a cue on the median TDM</p>
+          <p class="scale-sub">Choose a cue. The beam tilts by the mean change in the probability of the answer that carries it.</p>
+          <svg id="scale" viewBox="0 0 520 250" role="img" aria-label="A balance that tilts by the mean change in probability of the median TDM under the selected cue"></svg>
+          <div class="scale-readout" id="scale-readout" aria-live="polite"></div>
+          <div class="chips" id="scale-chips" role="group" aria-label="Cue"></div>
+        </figure>
+
+        <div class="more" id="more">
+          <button class="more-toggle" id="more-toggle" type="button" aria-expanded="false" aria-controls="more-panel">
+            <span>More research by Fabian Lukassen</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="more-panel" id="more-panel" hidden>
+            <div class="more-feature">
+              <span class="note-label">Platform and paper</span>
+              <a class="pub-title" href="https://cafe-ai.de/">CAFE: Compound AI Factorial Evaluation</a>
+              <p>A design-of-experiments platform for compound AI systems such as RAG pipelines, agents and LLM chains. It varies the factors of a system with replication and attributes quality to the components that drive it, with effect sizes and p-values.</p>
+              <p class="more-links"><a href="https://cafe-ai.de/">cafe-ai.de</a> · <a href="https://arxiv.org/abs/2607.10380">arXiv:2607.10380</a></p>
+            </div>
+            <ul class="pubs">
+              <li><a class="pub-title" href="https://arxiv.org/abs/2605.26770">Quality Without Usefulness: LLM-Generated XAI Narratives as Trust Heuristics Rather Than Decision Aids</a>
+                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, A. Silbersdorff, B. Saefken, T. Kneib · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02224">From XAI to Stories: A Factorial Study of LLM-Generated Explanation Quality</a>
+                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, B. Saefken, T. Kneib · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02957">LLM-Augmented Changepoint Detection: A Framework for Ensemble Detection and Automated Explanation</a>
+                <div class="pub-meta">F. Lukassen, C. Weisser, M. Schlee, M. Kumar, A. Thielmann, B. Saefken, et al. · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2608.11753">LabelFusion-TS: Fusing Large Language Models, Transformer Encoders, and Financial Time Series for Monetary-Policy Stance Classification</a>
+                <div class="pub-meta">M. Schlee, F. Lukassen, C. Weisser · 2026</div></li>
+            </ul>
+            <p class="more-links"><a href="https://scholar.google.com/citations?user=wwSQNeAAAAAJ&amp;hl=en">All publications on Google Scholar</a></p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="stats" role="list">
-      <div class="stat" role="listitem"><div class="stat-num">3 to 8 <small>of 12</small></div><div class="stat-text">tests bias each of the eight TDMs. None of them is unbiased.</div></div>
+      <div class="stat" role="listitem"><div class="stat-num">3 to 8 <small>of 12</small></div><div class="stat-text">tests bias each of the eight TDMs.</div></div>
       <div class="stat" role="listitem"><div class="stat-num">99% <small>→</small> 42%</div><div class="stat-text">accuracy of a typical TDM when the better answer is rewritten in an emotional tone.</div></div>
       <div class="stat" role="listitem"><div class="stat-num">0.95</div><div class="stat-text">correlation of the prompt effects of TDMs and 2026 LLM judges. Both flip on the same prompts.</div></div>
       <div class="stat" role="listitem"><div class="stat-num">37×</div><div class="stat-text">cheaper than a 2026 LLM judge at the median, and six times as fast.</div></div>
@@ -83,18 +108,18 @@
 
 <main>
 
-<!-- 1 · the question -->
-<section class="section" id="question">
+<!-- 1 · motivation -->
+<section class="section" id="motivation">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 1 &nbsp; The question</div><h2>Judges that do not write</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 1</div><h2>Motivation</h2></div>
     <div class="grid">
       <div class="prose reveal">
-        <p class="dropcap">Large language models are increasingly used to judge the outputs of other models. In pairwise judging, the judge reads two answers to the same question and decides which is better. Such judges are known to be biased. Their verdicts can change with cues that should not matter, for example the order in which the answers appear or a claim that most people prefer one of them. The CALM benchmark collects twelve of these biases and finds that even strong LLM judges are swayed by several of them.</p>
+        <p class="dropcap">Large language models (LLMs) are increasingly used to judge the outputs of other models. In pairwise judging, the judge reads two answers to the same question and decides which is better. Such judges are known to be biased. Their verdicts can change with cues that should not matter, for example the order in which the answers appear or a claim that most people prefer one of them. The CALM benchmark collects twelve of these biases and finds that even strong LLM judges are swayed by several of them.</p>
         <p>Typed decision models (TDMs) offer a more direct route. Given an input and one or more questions with a fixed set of options, a TDM returns a probability for each option in a single pass, without generating any text. TypeSafe, for example, presents its TDM Jev as faster and cheaper than LLMs, with calibrated probabilities, and TDMs are already used as judges. Most TDMs, however, are LLMs fine-tuned to return probabilities instead of text, so they may have inherited the biases of LLM judges. A systematic test of these biases on TDMs was missing.</p>
         <p>We therefore apply CALM's method to TDMs. We run its tests, and three of our own, on eight TDMs and on seven LLM judges of 2024 and 2026, all with the same prompts. This lets us ask three questions. Are TDMs biased? Are they more or less biased than LLM judges? And what do their probabilities reveal that a verdict alone would hide?</p>
       </div>
       <aside class="side reveal">
-        <div class="note"><span class="note-label">A TDM in one example</span>Asked whether answer A or answer B is better, a TDM such as Jev returns, for example, P(A)&nbsp;=&nbsp;0.83 and P(B)&nbsp;=&nbsp;0.17. The verdict is the option with the higher probability, and the probability says how sure the model is.</div>
+        <div class="note"><span class="note-label">Example</span>Asked whether answer A or answer B is better, a TDM such as Jev returns, for example, P(A)&nbsp;=&nbsp;0.83 and P(B)&nbsp;=&nbsp;0.17. The verdict is the option with the higher probability, and the probability says how sure the model is.</div>
         <div class="note"><span class="note-label">CALM</span><a href="https://llm-judge-bias.github.io/">Ye et al. (2025)</a>, <i>Justice or Prejudice? Quantifying Biases in LLM-as-a-Judge</i>, ICLR 2025. We use its data, prompts and metrics.</div>
       </aside>
     </div>
@@ -104,20 +129,26 @@
 <!-- 2 · method -->
 <section class="section" id="method">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 2 &nbsp; How we test</div><h2>Change one thing that should not matter</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 2</div><h2>Method</h2></div>
     <div class="grid">
       <div class="prose reveal">
         <p>Each test takes a question with a better and a worse answer, changes one thing that should not affect the verdict, and keeps everything else fixed. A fair judge gives the same verdict before and after. We use CALM's items, prompts and templates. Where CALM's released file had attached most fake citations to the wrong items, we generated them again as CALM describes.</p>
         <p>A judge may also change a verdict by chance, so we send every unperturbed prompt twice. The <em>excess</em> counts how many more verdicts the cue changes than a plain repetition does. For example, a judge that changes 20 of 100 verdicts under a cue and 2 of 100 when the prompt is simply sent again has an excess of 18. A test counts as a bias when the whole 95% interval of the excess lies above 5 per 100.</p>
-        <div class="formula">excess&nbsp; E = CR − RR &nbsp;<span class="muted">consistency rate on a repetition minus robustness rate under the cue</span></div>
+        <div class="formula">E = CR − RR &nbsp;<span class="muted">consistency rate on a repetition minus robustness rate under the cue</span></div>
       </div>
       <aside class="side reveal">
-        <div class="note"><span class="note-label">Why not the robustness rate alone</span>By CALM's robustness rate, the median TDM would look more robust than the median 2026 LLM judge in eight of eleven tests, by the excess in only three. TDMs almost never change a verdict by chance, LLM judges sometimes do.</div>
-        <div class="note"><span class="note-label">The excess is cautious</span>When a cue and chance both act on the same verdict, it flips back. The excess can therefore understate the effect of a cue, but never overstate it.</div>
+        <div class="note"><span class="note-label">Robustness rate</span>By CALM's robustness rate alone, the median TDM would look more robust than the median 2026 LLM judge in eight of eleven tests, by the excess in only three. TDMs almost never change a verdict by chance, LLM judges sometimes do.</div>
+        <div class="note"><span class="note-label">Excess</span>When a cue and chance both act on the same verdict, it flips back. The excess can therefore understate the effect of a cue, but never overstate it.</div>
       </aside>
       <div class="full reveal">
         <h3><span class="h-num">2.1</span>The twelve tests</h3>
-        <div class="tests" id="tests"></div>
+        <p class="figcap">Select a test to see one of its prompts with and without the cue.</p>
+        <div class="tests" id="tests" role="group" aria-label="Tests"></div>
+        <div class="example" id="example">
+          <p class="ex-what" id="ex-what"></p>
+          <div class="ex-grid" id="ex-grid"></div>
+          <p class="figcap">Changed text is highlighted. We picked prompts on which many TDMs changed their verdict, so the examples show the effect clearly rather than at its typical size. How each judge reacted to them is shown in <a href="#reactions">Fig. 3</a>.</p>
+        </div>
         <h3><span class="h-num">2.2</span>The fifteen judges</h3>
         <div class="judges" id="judges"></div>
         <p class="figcap">Every judge receives the same 14,223 prompts (13,251 perturbed and 972 originals, the originals sent twice), 15,195 requests in all. The TDMs answer in three request formats: CALM's prompt as one question, the vendor's native format with separate fields, and one question per criterion. The results below use CALM's format.</p>
@@ -126,19 +157,19 @@
   </div>
 </section>
 
-<!-- 3 · findings -->
-<section class="section" id="findings">
+<!-- 3 · results -->
+<section class="section" id="results">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 3 &nbsp; What we found</div><h2>Six findings</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 3</div><h2>Results</h2></div>
 
     <div class="grid">
       <div class="prose reveal">
         <h3><span class="h-num">3.1</span>Every TDM is biased</h3>
         <p>Each of the eight TDMs is biased in three (Solar) to eight (Kev) of the twelve tests. Sentiment and position bias all eight, sentiment most strongly, while five tests bias at most one. Which test is run matters far more than which TDM is tested. In a mixed model of the probability shift on each prompt, the test explains 25% of the variance and the model only 1.4%.</p>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">How to read the fingerprints</span>Each glyph is one judge. Each petal is one test, always in the same place, and its size grows with the excess. A filled petal is a bias, an outlined one is unclear, a faint one is no bias. Select a judge to follow it in the chart below.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Reading Fig. 1</span>Each glyph is one judge and each petal one test, always in the same place. The larger the petal, the larger the excess. Filled petals are biases, outlined ones unclear, faint ones no bias. Click a glyph to enlarge it.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 1</b> &nbsp;Bias fingerprints of all fifteen judges</span>
+        <span class="fig-label"><b>Fig. 1</b> &nbsp;Bias profile of each judge</span>
         <div class="panel">
           <div class="prints-key">
             <div class="chart" id="print-key"></div>
@@ -148,13 +179,31 @@
       </figure>
 
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 2</b> &nbsp;One test, all judges</span>
+        <span class="fig-label"><b>Fig. 2</b> &nbsp;Excess of all judges in one test</span>
         <div class="panel">
           <div class="controls"><span class="control-label">Test</span><div class="chips" id="forest-chips" role="group" aria-label="Test"></div></div>
           <div class="legend" id="forest-legend"></div>
           <div class="chart" id="forest"></div>
         </div>
-        <figcaption class="figcap">Excess per 100 judgments with its 95% interval. The red line marks the margin of 5 above which a whole interval counts as a bias. Filled dots are biases, rings are unclear, small faint dots are no bias.</figcaption>
+        <figcaption class="figcap">Excess per 100 judgments with its 95% interval. The red line marks the margin of 5 above which a whole interval counts as a bias. Filled dots are biases, rings are unclear, small faint dots are no bias. A judge selected in Fig. 1 is highlighted.</figcaption>
+      </figure>
+
+      <figure class="figure full reveal" id="reactions">
+        <span class="fig-label"><b>Fig. 3</b> &nbsp;Reactions to the example prompts of § 2.1</span>
+        <div class="panel">
+          <div class="controls"><span class="control-label">Test</span><div class="chips" id="react-chips" role="group" aria-label="Test"></div></div>
+          <div class="reactions">
+            <div>
+              <span class="fig-label">TDMs · probability of the better answer, before → after</span>
+              <div class="chart" id="ex-tdm"></div>
+            </div>
+            <div>
+              <span class="fig-label">LLM judges · verdict right, before → after</span>
+              <table class="llm-table" id="ex-llm"></table>
+            </div>
+          </div>
+        </div>
+        <figcaption class="figcap">Each arrow runs from the probability a TDM gave the better answer on the original prompt to the one it gave with the cue. Red arrows cross 0.5, so the verdict flips. In fallacy oversight the cue breaks the better answer's reasoning, so there the arrow should point left.</figcaption>
       </figure>
 
       <div class="prose reveal">
@@ -168,14 +217,14 @@
         </ul>
         <p>The position bias persists although every prompt tells the judge to ignore the order of the answers. It has to be removed by the design of the request, for example by asking in both orders.</p>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">A TDM can add a bias</span>Under bandwagon, Qwen3.8-27B changes 6 of 100 verdicts beyond chance. Perplexity Decider and Clef, two TDMs built on it, change 26 and 27.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Base LLM and TDM</span>Under bandwagon, Qwen3.8-27B changes 6 of 100 verdicts beyond chance. Perplexity Decider and Clef, two TDMs built on it, change 26 and 27.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 3</b> &nbsp;Median excess per test, by kind of judge</span>
+        <span class="fig-label"><b>Fig. 4</b> &nbsp;Median excess per test, by kind of judge</span>
         <div class="panel">
           <div class="legend" id="dumbbell-legend"></div>
           <div class="chart" id="dumbbell"></div>
         </div>
-        <figcaption class="figcap">Median excess of the eight TDMs and of the five LLM judges of 2026, and the mean of the two LLM judges of 2024. Tests are sorted by the gap between TDMs and 2026 LLM judges. Hover for the numbers.</figcaption>
+        <figcaption class="figcap">Median excess of the eight TDMs and of the five LLM judges of 2026, and the mean of the two LLM judges of 2024. Tests are sorted by the gap between TDMs and 2026 LLM judges.</figcaption>
       </figure>
 
       <div class="prose reveal">
@@ -183,9 +232,9 @@
         <p>Despite these differences, the two kinds of judge flip on the same prompts. When a TDM changes its verdict on a prompt, a 2026 LLM judge changes its own on 27% of these prompts, against 10% of the others. That is as much overlap as between two TDMs. In a logistic mixed model, the prompt effects of the TDMs and of the 2026 LLM judges correlate at 0.95, and the prompt accounts for about 40% of the variation in flips.</p>
         <p>Under sentiment, the prompt accounts for 90% of the variation in the flips of the LLM judges, so some rewrites flip almost every judge and others almost none. Part of what a test measures thus lies in its prompts. Either these items are hard for any model used as a judge, or their rewrites change more than the cue, and only human judgments of the same items could tell the two apart.</p>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">Similar models, similar profiles</span>Over the twelve tests, the bias profiles of two TDMs correlate at 0.69 on average, those of two 2026 LLM judges at 0.77, and those of a TDM and a 2026 LLM judge at 0.62.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Bias profiles</span>Over the twelve tests, the bias profiles of two TDMs correlate at 0.69 on average, those of two 2026 LLM judges at 0.77, and those of a TDM and a 2026 LLM judge at 0.62.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 4</b> &nbsp;If one judge flips, does the other?</span>
+        <span class="fig-label"><b>Fig. 5</b> &nbsp;Overlap of flips between judges</span>
         <div class="panel"><div class="legend" id="overlap-legend"></div><div class="chart" id="overlap"></div></div>
         <figcaption class="figcap">For pairs of judges and each test: how often the second judge flips on prompts where the first one flips, and on prompts where it does not. Averaged over pairs and tests.</figcaption>
       </figure>
@@ -197,7 +246,7 @@
       </div>
       <aside class="side reveal"><div class="note"><span class="note-label">Padding</span>Padding the better answer lowers the accuracy of the median 2026 LLM judge from 0.97 to 0.85 and that of the median TDM from 0.99 to 0.94. GPT-3.5 Turbo, which likes long answers, rises from 0.86 to 0.95.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 5</b> &nbsp;Accuracy before and after the cue</span>
+        <span class="fig-label"><b>Fig. 6</b> &nbsp;Accuracy before and after the cue</span>
         <div class="panel">
           <div class="controls"><span class="control-label">Cue</span><div class="chips" id="slope-chips" role="group" aria-label="Cue"></div></div>
           <div class="legend" id="slope-legend"></div>
@@ -211,76 +260,51 @@
         <p>Because a TDM returns a probability, we can see how far a cue moves it, even when the verdict stays. Under authority, position, bandwagon and sentiment, the median TDM keeps its verdict while its probability moves by more than 0.10 on 19 to 24% of the prompts, about as often as the verdict flips. Such hidden shifts matter wherever the probability is used as a score, for example as a reward in training, since a cue that never flips a verdict still moves the score.</p>
         <p>Most cues tip close calls. Outside sentiment and authority (on better), 30% of the verdicts given with a probability below 0.6 flip, against 3% of those given with more than 0.9. Each further 0.1 of confidence halves the odds of a flip. A tone or a citation on the better answer, however, flips even confident verdicts. A TDM's own probability is therefore a useful warning sign, except for exactly these two cues.</p>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">Calibration does not protect</span>The expected calibration error of the TDMs ranges from 0.07 (D1) to 0.25 (Solar), whose verdicts are 90% sure on average but right in only 67% of cases. Better calibration does not go with less bias.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Calibration</span>The expected calibration error of the TDMs ranges from 0.07 (D1) to 0.25 (Solar), whose verdicts are 90% sure on average but right in only 67% of cases. Better calibration does not go with less bias.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 6</b> &nbsp;Visible flips and hidden shifts</span>
+        <span class="fig-label"><b>Fig. 7</b> &nbsp;Flips and hidden shifts per test</span>
         <div class="panel"><div class="legend" id="iceberg-legend"></div><div class="chart" id="iceberg"></div></div>
-        <figcaption class="figcap">Above the line, the share of prompts on which the median TDM's verdict flips. Below it, the share on which the verdict stays but the probability moves by more than 0.10. Fallacy oversight is left out, since there a flip is the right reaction.</figcaption>
+        <figcaption class="figcap">Shares of prompts for the median TDM: the verdict flips, or it stays while the probability moves by more than 0.10. Fallacy oversight is left out, since there a flip is the right reaction.</figcaption>
       </figure>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 7</b> &nbsp;Close calls flip</span>
+        <span class="fig-label"><b>Fig. 8</b> &nbsp;Flips by confidence</span>
         <div class="panel">
           <div class="controls"><span class="control-label">Test</span><div class="chips" id="curve-chips" role="group" aria-label="Test"></div></div>
           <div class="chart" id="curve"></div>
         </div>
-        <figcaption class="figcap">Share of flipped verdicts by the probability that the TDM gave its choice on the original prompt, all eight TDMs pooled. The faint line repeats all tests except sentiment and authority (on better) for comparison.</figcaption>
+        <figcaption class="figcap">Share of flipped verdicts by the probability that the TDM gave its choice on the original prompt, all eight TDMs pooled. The grey line shows all tests except sentiment and authority (on better) for comparison.</figcaption>
       </figure>
 
       <div class="prose reveal">
         <h3><span class="h-num">3.6</span>Cheap and consistent</h3>
         <p>On the original prompts, the TDMs are about as accurate as the 2026 LLM judges, slightly less so on the alignment set. They are far cheaper and faster. At the median, a 2026 LLM judge costs 37 times as much as a TDM and takes six times as long, mostly for the explanation of 90 to 540 tokens that CALM's prompt asks for. The TDMs are also more consistent: six of the eight repeat more than 99.7% of their verdicts when a prompt is sent again.</p>
-        <p>The low price does not buy freedom from bias. It does, however, make the checks cheap. A full bias test of one TDM cost between US$0.26 and US$3.11 in October 2026.</p>
+        <p>The low price does not buy freedom from bias, but it makes the checks cheap. A full bias test of one TDM cost between US$0.26 and US$3.11 in October 2026.</p>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">Asking twice</span>Asking a TDM in both orders and averaging its two probabilities removes the position bias by construction. It doubles the cost and changed accuracy by −0.2 to +3.8 points.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Both orders</span>Asking a TDM in both orders and averaging its two probabilities removes the position bias by construction. It doubles the cost and changed accuracy by −0.2 to +3.8 points.</div></aside>
       <figure class="figure full reveal">
-        <span class="fig-label"><b>Fig. 8</b> &nbsp;Cost against bias</span>
+        <span class="fig-label"><b>Fig. 9</b> &nbsp;Cost and number of biases</span>
         <div class="panel"><div class="legend" id="cost-legend"></div><div class="chart" id="cost"></div></div>
-        <figcaption class="figcap">Cost per 1,000 judgments on a logarithmic scale against the number of tests with a bias. Hover for latency and consistency.</figcaption>
+        <figcaption class="figcap">Cost per 1,000 judgments on a logarithmic scale against the number of tests with a bias.</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- 4 · example -->
-<section class="section" id="example">
+<!-- 4 · further results -->
+<section class="section" id="further">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 4 &nbsp; A test in action</div><h2>One prompt, before and after the cue</h2></div>
-    <div class="prose reveal">
-      <p>Choose a test to see one of its prompts with and without the cue, and how each judge reacted. Changed text is highlighted. We picked prompts on which many TDMs changed their verdict, so these examples show the effect at its clearest rather than at its typical size.</p>
-    </div>
-    <div class="reveal">
-      <div class="controls"><span class="control-label">Test</span><div class="chips" id="ex-chips" role="group" aria-label="Test"></div></div>
-      <p class="figcap" id="ex-what"></p>
-      <div class="ex-grid" id="ex-grid"></div>
-      <div class="reactions">
-        <div>
-          <span class="fig-label">TDMs · probability of the better answer, before → after</span>
-          <div class="chart" id="ex-tdm"></div>
-        </div>
-        <div>
-          <span class="fig-label">LLM judges · verdict right, before → after</span>
-          <table class="llm-table" id="ex-llm"></table>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 · appendix -->
-<section class="section" id="appendix">
-  <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 5 &nbsp; Beyond the eight pages</div><h2>From the appendix</h2></div>
-    <div class="prose reveal"><p>The appendix of the paper holds much that did not fit into the main text. These are the parts we find most interesting.</p></div>
+    <div class="sec-head"><div class="sec-kicker">§ 4</div><h2>Further results</h2></div>
+    <div class="prose reveal"><p>The appendix of the paper reports these and more results in detail.</p></div>
     <div class="mini-grid reveal">
       <div class="mini">
-        <h4>The louder the majority, the more TDMs follow it</h4>
+        <h4>Larger claimed majorities sway TDMs more</h4>
         <p>Every TDM is swayed more by a claimed majority of 90% than by one of 60%. The median 2026 LLM judge hardly reacts, with a robustness rate of 0.93 at 60% and 0.89 at 90%.</p>
         <div class="legend" id="dose-legend"></div>
         <div class="chart" id="dose"></div>
       </div>
       <div class="mini">
         <h4>Calibration and bias are unrelated</h4>
-        <p>Across the eight TDMs, the rank correlations of the calibration error and the Brier score with the mean excess lie between −0.36 and 0.40 and change sign between the two datasets. A well calibrated TDM is not a fair one.</p>
+        <p>Across the eight TDMs, the rank correlations of the calibration error and the Brier score with the mean excess lie between −0.36 and 0.40 and change sign between the two datasets. Good calibration does not indicate low bias.</p>
         <div class="chart" id="ece"></div>
       </div>
       <div class="mini">
@@ -296,10 +320,11 @@
       <div class="mini">
         <h4>Identity notes matter no more than a neutral note</h4>
         <p>Notes on the identity of an answer's author change no more verdicts than our neutral note (median excess 3 and 4), and the six identity groups do not differ from each other. CALM's judges had reacted most to female and refugee identities.</p>
-        <div class="legend" id="identity-legend"></div><div class="chart" id="identity"></div>
+        <div class="legend" id="identity-legend"></div>
+        <div class="chart" id="identity"></div>
       </div>
       <div class="mini">
-        <h4>One interface, quite different systems</h4>
+        <h4>One interface, different systems</h4>
         <p>On a 50/50 answer, three TDMs always return the first option, and their calibration differs widely. A confidence of 0.8 does not mean the same for two models, so a threshold tuned on one cannot be carried over to another. No TDM is the least biased in every test, so the best model depends on the bias that matters for the task.</p>
       </div>
       <div class="mini">
@@ -307,17 +332,17 @@
         <p>Under position, Clef's excess is larger than that of its base LLM Qwen3.8-27B (14 against 6), but only because Qwen also changes verdicts by chance. Under the swap itself, both change about as many verdicts (13.9 and 14.8%).</p>
       </div>
       <div class="mini">
-        <h4>Close architecture, different behaviour</h4>
+        <h4>Similarity to the LLM judges</h4>
         <p>Tev1, which keeps the language-model head of its LLM and answers with one letter, has the bias profile least like that of the 2026 LLM judges (rank correlation 0.38). Jev (0.87), Perplexity (0.81) and Clef (0.80) are the most similar. With eight models and twelve tests, this is only a first indication.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 6 · guide -->
-<section class="section" id="guide">
+<!-- 5 · recommendations -->
+<section class="section" id="recommendations">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 6 &nbsp; In practice</div><h2>Replacing an LLM judge with a TDM?</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 5</div><h2>Replacing an LLM judge with a TDM</h2></div>
     <div class="grid">
       <div class="prose reveal">
         <p>A TDM is a good choice where cost, speed and consistency matter, and for tone, citations and padding a switch adds no bias. An LLM judge remains the safer choice where the inputs carry claimed majorities, popularity counts or the names of the systems that wrote the answers, where a verdict must be explained, and for judgments we have not tested, such as checking a derivation or reading long inputs. For a switch, the paper recommends:</p>
@@ -332,31 +357,15 @@
           <li><span><b>Test again after an update.</b> TDMs are new and change quickly, and a full test costs a few dollars.</span></li>
         </ol>
       </div>
-      <aside class="side reveal"><div class="note"><span class="note-label">Where the guide comes from</span>Appendix N of the paper. It rests on the eight TDMs and seven LLM judges we tested in October 2026 and on CALM's fairly simple tests, so it is a starting point rather than a guarantee.</div></aside>
+      <aside class="side reveal"><div class="note"><span class="note-label">Source</span>Appendix N of the paper. It rests on the eight TDMs and seven LLM judges we tested in October 2026 and on CALM's fairly simple tests, so it is a starting point rather than a guarantee.</div></aside>
     </div>
   </div>
 </section>
 
-<!-- figures slider -->
-<section class="section" id="figures">
-  <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">Figures from the paper</div><h2>As printed</h2></div>
-    <div class="slider reveal" id="slider" aria-roledescription="carousel" aria-label="Figures from the paper">
-      <div class="slides"><div class="track" id="track"></div></div>
-      <div class="slider-bar">
-        <button class="arrow" id="prev" type="button" aria-label="Previous figure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <button class="arrow" id="next" type="button" aria-label="Next figure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
-        <span class="slider-count" id="count"></span>
-        <div class="dots" id="dots"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 7 · benchmark -->
+<!-- 6 · benchmark -->
 <section class="section" id="benchmark">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 7 &nbsp; The benchmark</div><h2>Test your own judge</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 6</div><h2>Benchmark and code</h2></div>
     <div class="grid">
       <div class="prose reveal">
         <p>We release all 14,223 prompts and every answer of the fifteen judges, with their probabilities, full replies, costs and timings. The prompts can be sent to any judge that compares two answers, and no code from the repository is needed to use them.</p>
@@ -372,18 +381,18 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
           <tr><td>answers/llm_judges/</td><td>Seven LLM judges with their full replies</td></tr>
           <tr><td>generated/</td><td>The 900 fake citations and the 500 padded better answers</td></tr>
         </table>
-        <div class="warn"><b>Please note.</b> All citations in the authority tests are fabricated on purpose, and most quotes attribute invented words to real public figures. Do not use them outside the benchmark. CALM's alignment set, and therefore our prompts, contains 44 items from a role-play dataset with sexual content.</div>
-        <p><a class="btn" href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/data">Get the data</a></p>
+        <div class="warn"><b>Note.</b> All citations in the authority tests are fabricated on purpose, and most quotes attribute invented words to real public figures. Do not use them outside the benchmark. CALM's alignment set, and therefore our prompts, contains 44 items from a role-play dataset with sexual content.</div>
+        <p><a class="btn" href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/data">Data</a> &nbsp; <a class="btn" href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/code">Code</a></p>
       </div>
       <aside class="side reveal"><div class="note"><span class="note-label">Licences</span>Data and analysis CC BY-NC-SA 4.0, as required for material adapted from ScienceQA. Code MIT. The prompts contain material from CALM and the datasets it builds on, which keep their own terms.</div></aside>
     </div>
   </div>
 </section>
 
-<!-- 8 · limitations -->
+<!-- 7 · limitations -->
 <section class="section" id="limits">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 8 &nbsp; Limitations</div><h2>What we cannot say</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 7</div><h2>Limitations</h2></div>
     <div class="prose reveal">
       <p>All our tests are pairwise comparisons with a reference, a correct answer or a dataset label, so judges that score single answers or stand in for a human's perception remain untested. We rely on CALM's items and rewrites, which GPT-4-Turbo wrote and which may change more than the intended property. Our citations are fake, as in CALM, so whether punishing them is a bias or sound judgment needs a test with real sources.</p>
       <p>The flips we report describe how a judge's output changes with its input, not why. The training data of the models are not public, so we cannot attribute differences between models to their size or training. Finally, TDMs are new, and our results describe the models of October 2026. The tests should be repeated on later models, which the released code and data allow for a few dollars per model.</p>
@@ -391,10 +400,26 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
   </div>
 </section>
 
-<!-- 9 · cite -->
+<!-- figures of the paper -->
+<section class="section" id="figures">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-kicker">§ 8</div><h2>Figures of the paper</h2></div>
+    <div class="slider reveal" id="slider" aria-roledescription="carousel" aria-label="Figures of the paper">
+      <div class="slides"><div class="track" id="track"></div></div>
+      <div class="slider-bar">
+        <button class="arrow" id="prev" type="button" aria-label="Previous figure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="arrow" id="next" type="button" aria-label="Next figure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
+        <span class="slider-count" id="count"></span>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- citation -->
 <section class="section" id="cite">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 9 &nbsp; Cite</div><h2>BibTeX</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 9</div><h2>Citation</h2></div>
     <div class="cite-box reveal">
 <pre id="bibtex"><code>@misc{lukassen2026cheap,
   title         = {Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges},
@@ -410,37 +435,6 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
   </div>
 </section>
 
-<!-- research -->
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">More research</div><h2>Other work by the authors</h2></div>
-    <div class="research reveal">
-      <div class="feature">
-        <span class="fig-label">Platform and paper</span>
-        <h3>CAFE: Compound AI Factorial Evaluation</h3>
-        <p>A design-of-experiments platform for compound AI systems such as RAG pipelines, agents and LLM chains. Declare the factors to vary, run them with replication, and attribute quality to the components that actually drive it, with effect sizes and p-values. It supports LLM judges and human ratings, and comes as a Python package, a web platform and a self-hostable deployment.</p>
-        <div class="actions">
-          <a class="btn primary" href="https://cafe-ai.de/">cafe-ai.de</a>
-          <a class="btn" href="https://arxiv.org/abs/2607.10380">Paper</a>
-        </div>
-      </div>
-      <div>
-        <ul class="pubs">
-          <li><a class="pub-title" href="https://arxiv.org/abs/2605.26770">Quality Without Usefulness: LLM-Generated XAI Narratives as Trust Heuristics Rather Than Decision Aids</a>
-            <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, A. Silbersdorff, B. Saefken, T. Kneib &nbsp;·&nbsp; <span class="num">arXiv:2605.26770</span>, 2026</div></li>
-          <li><a class="pub-title" href="https://arxiv.org/abs/2601.02224">From XAI to Stories: A Factorial Study of LLM-Generated Explanation Quality</a>
-            <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, B. Saefken, T. Kneib &nbsp;·&nbsp; <span class="num">arXiv:2601.02224</span>, 2026</div></li>
-          <li><a class="pub-title" href="https://arxiv.org/abs/2601.02957">LLM-Augmented Changepoint Detection: A Framework for Ensemble Detection and Automated Explanation</a>
-            <div class="pub-meta">F. Lukassen, C. Weisser, M. Schlee, M. Kumar, A. Thielmann, B. Saefken, et al. &nbsp;·&nbsp; <span class="num">arXiv:2601.02957</span>, 2026</div></li>
-          <li><a class="pub-title" href="https://arxiv.org/abs/2608.11753">LabelFusion-TS: Fusing Large Language Models, Transformer Encoders, and Financial Time Series for Monetary-Policy Stance Classification</a>
-            <div class="pub-meta">M. Schlee, F. Lukassen, C. Weisser &nbsp;·&nbsp; <span class="num">arXiv:2608.11753</span>, 2026</div></li>
-        </ul>
-        <p class="figcap"><a href="https://scholar.google.com/citations?user=wwSQNeAAAAAJ&amp;hl=en">All publications on Google Scholar</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer>
@@ -449,6 +443,19 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
     <span><a href="https://github.com/fabian-lu/TDM_as_a_Judge">github.com/fabian-lu/TDM_as_a_Judge</a></span>
   </div>
 </footer>
+
+<dialog class="print-dialog" id="print-dialog" aria-labelledby="pd-title">
+  <div class="pd-head">
+    <div><span class="fig-label" id="pd-kind"></span><h3 id="pd-title"></h3><span class="print-count" id="pd-count"></span></div>
+    <button class="pd-close" id="pd-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="chart" id="pd-chart"></div>
+  <div class="pd-foot">
+    <button class="arrow" id="pd-prev" type="button" aria-label="Previous judge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <span class="figcap">Labels give the excess per 100 judgments.</span>
+    <button class="arrow" id="pd-next" type="button" aria-label="Next judge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+</dialog>
 
 <div class="tooltip" id="tooltip" role="tooltip"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>

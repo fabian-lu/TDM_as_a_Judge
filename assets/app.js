@@ -40,6 +40,7 @@
     tip.style.left = x + "px"; tip.style.top = y + "px";
   }
   const hideTip = () => { tip.style.opacity = 0; };
+  window.addEventListener("scroll", hideTip, { passive: true });
 
   /* ---------- small helpers ---------- */
   function chips(container, items, selected, onSelect) {
@@ -68,12 +69,19 @@
   /* ---------- static lists ---------- */
   function renderTests() {
     $("#tests").innerHTML = tests.map((t) => `
-      <div class="test"><div class="test-top"><h4>${esc(t.name)}</h4>
+      <button type="button" class="test" data-key="${esc(t.key)}" aria-pressed="${t.key === exKey}"><div class="test-top"><h4>${esc(t.name)}</h4>
       <span class="tag ${t.ours ? "ours" : ""}">${t.ours ? "ours · " : ""}${t.dataset === "fact" ? "fact-related" : "alignment"}</span></div>
-      <p>${esc(t.what)}</p></div>`).join("");
+      <p>${esc(t.what)}</p></button>`).join("");
+    document.querySelectorAll("#tests .test").forEach((b) => b.addEventListener("click", () => selectExample(b.dataset.key)));
     $("#judges").innerHTML = KINDS.map((k) => `
       <div class="judge-group"><h4>${swatchHTML(k)}${esc(KIND[k].label)}</h4><ul>
       ${judges.filter((j) => j.kind === k).map((j) => `<li>${esc(j.name)}</li>`).join("")}</ul></div>`).join("");
+  }
+  function selectExample(key) {
+    exKey = key;
+    document.querySelectorAll("#tests .test").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.key === key)));
+    if (reactCtl) reactCtl.select(key);
+    renderExample(); renderReactions();
   }
 
   /* ---------- hero: the scale ---------- */
@@ -125,7 +133,6 @@
     const token = left.append("g").attr("class", "token");
     token.append("rect").attr("height", 24).attr("y", 35).attr("fill", mark).attr("stroke", ink).attr("stroke-width", 0.8);
     token.append("text").attr("y", 52).attr("text-anchor", "middle").attr("class", "lbl-strong").style("font-size", "14px");
-    svg.append("text").attr("x", cx).attr("y", 254).attr("text-anchor", "middle").attr("class", "lbl-small").style("font-size", "12px").text("tilt = mean shift of the probability, median TDM");
     scaleState.parts = { beam, left, right, token, cx, cy, L };
     setScale(scaleState.key, false);
   }
@@ -183,18 +190,32 @@
     const rScale = d3.scaleSqrt().domain([0, 0.4]).range([r0, R]).clamp(true);
     const arc = d3.arc().cornerRadius(1.5).padAngle(0.035);
     g.append("circle").attr("r", rScale(0.05)).attr("fill", "none").attr("stroke", css("--accent")).attr("stroke-width", 0.7).attr("opacity", 0.55);
+    const paths = [];
     values.forEach((v, i) => {
       const a = i * step;
       const outer = Math.max(r0 + 1.5, rScale(Math.max(0, v.e ?? 0)));
       const d = arc({ innerRadius: r0, outerRadius: outer, startAngle: a - step / 2, endAngle: a + step / 2 });
+      const hit = arc({ innerRadius: r0, outerRadius: R, startAngle: a - step / 2, endAngle: a + step / 2 });
       const p = g.append("path").attr("d", d);
       if (opts.key) p.attr("fill", css("--rule")).attr("stroke", css("--muted")).attr("stroke-width", 0.6);
       else if (v.c === "bias") p.attr("fill", opts.color);
       else if (v.c === "unclear") p.attr("fill", opts.color).attr("fill-opacity", 0.2).attr("stroke", opts.color).attr("stroke-width", 0.9);
       else p.attr("fill", css("--rule")).attr("fill-opacity", 0.8);
-      if (opts.onHover) p.style("cursor", "pointer").on("mousemove", (ev) => opts.onHover(ev, v, i)).on("mouseleave", hideTip);
+      paths.push(p);
+      if (opts.labels) {
+        const la = a - Math.PI / 2, rr = R + 14, x = Math.cos(la) * rr, y = Math.sin(la) * rr;
+        const anchor = Math.abs(x) < 6 ? "middle" : x > 0 ? "start" : "end";
+        const t = g.append("text").attr("x", x).attr("y", y + 4).attr("text-anchor", anchor).attr("class", "lbl-small").style("font-size", "11.5px");
+        t.append("tspan").text((opts.labels === "short" ? SHORT[tests[i].name] : tests[i].name) + (tests[i].ours ? "†" : ""));
+        t.append("tspan").attr("dx", 4).style("font-family", "var(--mono)").style("fill", v.c === "bias" ? css("--ink") : css("--muted")).text(per100(v.e));
+      }
+      if (opts.onHover) g.append("path").attr("d", hit).attr("fill", "transparent").style("cursor", "pointer")
+        .on("mousemove", (ev) => { paths.forEach((q, m) => q.attr("opacity", m === i ? 1 : 0.35)); opts.onHover(ev, v, i); })
+        .on("mouseleave", () => { paths.forEach((q) => q.attr("opacity", 1)); hideTip(); });
     });
   }
+  const printTip = (j) => (ev, v, i) => showTip(
+    `<b>${esc(j.name)}</b> · ${esc(tests[i].name)}<br>excess <span class="tt-num">${per100(v.e)}</span> per 100 <span class="tt-num">[${per100(v.lo)}, ${per100(v.hi)}]</span><br>${v.c === "bias" ? "bias" : v.c === "unclear" ? "unclear" : "no bias"}`, ev);
   function renderPrints() {
     // the key
     const ks = svgIn("#print-key", 260, 240), kg = ks.append("g").attr("transform", "translate(130,120)");
@@ -214,17 +235,55 @@
       const s = d3.select(b).append("svg").attr("viewBox", "0 0 120 120");
       const g = s.append("g").attr("transform", "translate(60,60)");
       const vals = tests.map((t) => cell(j.id, t.key));
-      petals(g, 54, 6, vals, { color: col(j.kind), onHover: (ev, v, i) => showTip(
-        `<b>${esc(j.name)}</b> · ${esc(tests[i].name)}<br>excess <span class="tt-num">${per100(v.e)}</span> per 100 <span class="tt-num">[${per100(v.lo)}, ${per100(v.hi)}]</span><br>${v.c === "bias" ? "bias" : v.c === "unclear" ? "unclear" : "no bias"}`, ev) });
+      petals(g, 54, 6, vals, { color: col(j.kind), onHover: printTip(j) });
       const nm = document.createElement("div"); nm.className = "print-name"; nm.textContent = j.name; b.appendChild(nm);
       const ct = document.createElement("div"); ct.className = "print-count"; ct.textContent = `${j.nBiased} of 12 biased`; b.appendChild(ct);
       b.addEventListener("click", () => {
-        selectedJudge = selectedJudge === j.id ? null : j.id;
+        selectedJudge = j.id;
         document.querySelectorAll(".print").forEach((x) => x.classList.remove("active"));
-        if (selectedJudge) b.classList.add("active");
-        renderForest();
+        b.classList.add("active");
+        renderForest(); openPrint(j.id);
       });
     });
+  }
+
+  /* ---------- enlarged fingerprint ---------- */
+  let dialogJudge = null;
+  function openPrint(id) {
+    dialogJudge = id;
+    const dlg = $("#print-dialog");
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); }
+    drawDialog();
+  }
+  function drawDialog() {
+    const j = jById[dialogJudge];
+    $("#pd-kind").textContent = KIND[j.kind].label.replace(/s$/, "").replace("judges", "judge");
+    $("#pd-title").textContent = j.name;
+    $("#pd-count").textContent = `${j.nBiased} of 12 tests with a bias`;
+    const S = Math.min(width("#pd-chart", 260), 600), narrow = S < 480;
+    const R = narrow ? Math.max(62, S / 2 - 96) : Math.min(175, S / 2 - 150), H = 2 * R + 64;
+    const svg = svgIn("#pd-chart", S, H);
+    const g = svg.append("g").attr("transform", `translate(${S / 2},${H / 2})`);
+    petals(g, R, 10, tests.map((t) => cell(j.id, t.key)), { color: col(j.kind), labels: narrow ? "short" : "long", onHover: printTip(j) });
+  }
+  function initDialog() {
+    const dlg = $("#print-dialog");
+    const close = () => { hideTip(); if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); };
+    $("#pd-close").addEventListener("click", close);
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) close(); });
+    const step_ = (d) => { const i = judges.findIndex((j) => j.id === dialogJudge); openPrint(judges[(i + d + judges.length) % judges.length].id); };
+    $("#pd-prev").addEventListener("click", () => step_(-1));
+    $("#pd-next").addEventListener("click", () => step_(1));
+    dlg.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft") step_(-1); if (e.key === "ArrowRight") step_(1); });
+  }
+
+  /* ---------- research popover ---------- */
+  function initMore() {
+    const btn = $("#more-toggle"), panel = $("#more-panel");
+    const set = (open) => { btn.setAttribute("aria-expanded", String(open)); panel.hidden = !open; };
+    btn.addEventListener("click", (e) => { e.stopPropagation(); set(panel.hidden); });
+    document.addEventListener("click", (e) => { if (!panel.hidden && !$("#more").contains(e.target)) set(false); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) { set(false); btn.focus(); } });
   }
 
   /* ---------- Fig. 2: forest plot per test ---------- */
@@ -333,7 +392,7 @@
   ];
   let slopeKey = "citation";
   function slopePanel(sel, testKey, title) {
-    const W = width(sel, 280), H = 300, left = 40, right = 120, top = 30, bottom = 30;
+    const W0 = width(sel, 280), narrow = W0 < 460, W = W0, H = narrow ? 330 : 300, left = 40, right = narrow ? 16 : 120, top = 30, bottom = narrow ? 60 : 30;
     const svg = svgIn(sel, W, H);
     const rows = D.accuracy.filter((a) => a.test === testKey).map((a) => ({ ...a, j: jByName[a.judge] })).filter((a) => a.j);
     const y = d3.scaleLinear().domain([0.2, 1]).range([H - bottom, top]);
@@ -343,7 +402,7 @@
       svg.append("line").attr("class", "grid-line").attr("x1", x0).attr("x2", x1).attr("y1", y(t)).attr("y2", y(t));
       svg.append("text").attr("class", "tick-label").attr("x", x0 - 8).attr("y", y(t) + 3).attr("text-anchor", "end").text(t.toFixed(1));
     });
-    [["original", x0], ["with the cue", x1]].forEach(([t, xx]) => svg.append("text").attr("class", "lbl-small").attr("x", xx).attr("y", H - 8).attr("text-anchor", xx === x0 ? "start" : "end").text(t));
+    [["original", x0], ["with the cue", x1]].forEach(([t, xx]) => svg.append("text").attr("class", "lbl-small").attr("x", xx).attr("y", H - bottom + 18).attr("text-anchor", xx === x0 ? "start" : "end").text(t));
     rows.forEach((r) => {
       svg.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(r.before)).attr("y2", y(r.after)).attr("stroke", col(r.j.kind)).attr("stroke-width", 1).attr("opacity", 0.35)
         .on("mousemove", (ev) => showTip(`<b>${esc(r.judge)}</b><br>accuracy <span class="tt-num">${r.before.toFixed(2)} → ${r.after.toFixed(2)}</span>`, ev)).on("mouseleave", hideTip)
@@ -361,6 +420,7 @@
       svg.append("circle").attr("cx", x1).attr("cy", y(m.a)).attr("r", 3.5).attr("fill", col(m.k));
       labels.push({ y: y(m.a), text: `${m.k === "TDM" ? "median TDM" : "median 2026 LLM"} ${m.b.toFixed(2)} → ${m.a.toFixed(2)}`, c: col(m.k) });
     });
+    if (narrow) { labels.forEach((l, k) => svg.append("text").attr("x", x0).attr("y", H - 22 + k * 15).attr("class", "lbl-small").style("fill", l.c).style("font-weight", 600).text(l.text)); return; }
     labels.sort((a, b) => a.y - b.y);
     if (labels.length === 2 && labels[1].y - labels[0].y < 14) { const mid = (labels[0].y + labels[1].y) / 2; labels[0].y = mid - 8; labels[1].y = mid + 8; }
     labels.forEach((l) => svg.append("text").attr("x", x1 + 8).attr("y", l.y + 4).attr("class", "lbl-small").style("fill", l.c).style("font-weight", 600).text(l.text));
@@ -374,6 +434,7 @@
   /* ---------- Fig. 6: iceberg ---------- */
   function renderIceberg() {
     const W = width("#iceberg", 320), narrow = W < 640;
+    if (narrow) return renderIcebergRows(W);
     const keys = Object.keys(D.hidden).sort((a, b) => (D.hidden[b].flip + D.hidden[b].hidden) - (D.hidden[a].flip + D.hidden[a].hidden));
     const top = 26, mid = 150, bottom = narrow ? 120 : 100, H = mid + 120 + bottom, left = 40, right = 10;
     const svg = svgIn("#iceberg", W, H);
@@ -403,6 +464,28 @@
     legend("#iceberg-legend", [
       { html: `<i class="swatch" style="background:${c}"></i>`, label: "above the line: the verdict flips" },
       { html: `<i class="swatch" style="background:${c};opacity:.3;outline:1px solid ${c}"></i>`, label: "below: the verdict stays, but the probability moves by more than 0.10" }]);
+  }
+
+  function renderIcebergRows(W) {
+    const keys = Object.keys(D.hidden).sort((a, b) => (D.hidden[b].flip + D.hidden[b].hidden) - (D.hidden[a].flip + D.hidden[a].hidden));
+    const rowH = 34, top = 22, H = top + keys.length * rowH + 24, mid = W / 2, half = W / 2 - 34;
+    const svg = svgIn("#iceberg", W, H);
+    const x = d3.scaleLinear().domain([0, 0.32]).range([0, half]);
+    const c = col("TDM");
+    svg.append("text").attr("class", "lbl-small").attr("x", mid - 6).attr("y", 10).attr("text-anchor", "end").text("← stays, moves > 0.10");
+    svg.append("text").attr("class", "lbl-small").attr("x", mid + 6).attr("y", 10).text("flips →");
+    keys.forEach((k, i) => {
+      const v = D.hidden[k], y = top + i * rowH;
+      svg.append("text").attr("class", "lbl-small").attr("x", mid).attr("y", y + 9).attr("text-anchor", "middle").style("fill", css("--ink-2")).text(testName(k));
+      svg.append("rect").attr("x", mid - x(v.hidden)).attr("y", y + 13).attr("width", x(v.hidden)).attr("height", 12).attr("fill", c).attr("fill-opacity", 0.3).attr("stroke", c).attr("stroke-width", 0.8);
+      svg.append("rect").attr("x", mid).attr("y", y + 13).attr("width", x(v.flip)).attr("height", 12).attr("fill", c);
+      svg.append("text").attr("class", "tick-label").attr("x", mid - x(v.hidden) - 4).attr("y", y + 23).attr("text-anchor", "end").text(Math.round(v.hidden * 100) + "%");
+      svg.append("text").attr("class", "tick-label").attr("x", mid + x(v.flip) + 4).attr("y", y + 23).text(Math.round(v.flip * 100) + "%");
+    });
+    svg.append("line").attr("x1", mid).attr("x2", mid).attr("y1", top + 10).attr("y2", H - 20).attr("stroke", css("--ink")).attr("stroke-width", 1.2);
+    legend("#iceberg-legend", [
+      { html: `<i class="swatch" style="background:${c}"></i>`, label: "the verdict flips" },
+      { html: `<i class="swatch" style="background:${c};opacity:.3;outline:1px solid ${c}"></i>`, label: "the verdict stays, but the probability moves by more than 0.10" }]);
   }
 
   /* ---------- Fig. 7: confidence curve ---------- */
@@ -461,7 +544,9 @@
       const lw = j.name.length * 6.1;
       let ly = p.py + 4, lx = p.px + 8;
       if (lx + lw > W - right) lx = p.px - 8 - lw;
-      for (let tries = 0; tries < 6 && placed.some((q) => Math.abs(q.y - ly) < 12 && lx < q.x + q.w && lx + lw > q.x); tries++) ly += 12;
+      const clash = () => placed.some((q) => Math.abs(q.y - ly) < 12 && lx < q.x + q.w && lx + lw > q.x);
+      if (W < 560) { if (clash()) return; }
+      else for (let tries = 0; tries < 6 && clash(); tries++) ly += 12;
       placed.push({ x: lx, y: ly, w: lw });
       svg.append("text").attr("x", lx).attr("y", ly).attr("class", "lbl-small").text(j.name);
     });
@@ -571,12 +656,12 @@
     svg.append("text").attr("class", "lbl-small").attr("x", W - right).attr("y", H - 2).attr("text-anchor", "end").text("change in accuracy, points");
   }
 
-  /* ---------- § 4: the example browser ---------- */
-  let exKey = "sentiment";
+  /* ---------- § 2.1 example and Fig. 3 reactions ---------- */
+  let exKey = "sentiment", reactCtl = null;
   function segHTML(seg) { return seg.map(([op, t]) => op === "ins" ? `<ins>${esc(t)}</ins>` : op === "del" ? `<del>${esc(t)}</del>` : esc(t)).join(" "); }
   function renderExample() {
     const ex = D.examples.find((e) => e.test === exKey), t = tByKey[exKey], fallacy = exKey === "fallacy";
-    $("#ex-what").innerHTML = `<b>${esc(t.name)}${t.ours ? " (our addition)" : ""}.</b> ${esc(t.what)} Source of this item: ${esc(ex.source.replace(/^.*\//, ""))}.`;
+    $("#ex-what").innerHTML = `<b>${esc(t.name)}${t.ours ? " (our addition)" : ""}.</b> ${esc(t.what)} Item from ${esc(ex.source.replace(/^.*\//, ""))}.`;
     const tagFor = (isR1, after) => isR1 ? (fallacy && after ? '<span class="better">reasoning broken</span>' : '<span class="better">better</span>') : (fallacy && after ? '<span class="better">now better</span>' : "");
     const col1 = ["A", "B"].map((s) => `
       <div class="ex-ans"><div class="ex-ans-head"><span>${esc(ex.orig[s].label)}</span>${tagFor(ex.orig[s].r1, false)}</div>
@@ -587,8 +672,10 @@
     $("#ex-grid").innerHTML = `
       <div class="ex-col"><h4>Original prompt</h4><div class="ex-q">${esc(ex.question)}</div>${col1}${ex.orig.note ? `<div class="ex-note">${esc(ex.orig.note)}</div>` : ""}</div>
       <div class="ex-col"><h4>With the cue</h4><div class="ex-q">${esc(ex.question)}</div>${col2}${ex.pert.note ? `<div class="ex-note">${esc(ex.pert.note)}</div>` : ""}</div>`;
-    // TDM arrows
-    const W = width("#ex-tdm", 280), rowH = 24, left = 120, right = 16, H = ex.tdm.length * rowH + 30;
+  }
+  function renderReactions() {
+    const ex = D.examples.find((e) => e.test === exKey), fallacy = exKey === "fallacy";
+    const W = width("#ex-tdm", 280), narrow = W < 420, rowH = 24, left = narrow ? 104 : 120, right = 16, H = ex.tdm.length * rowH + 30;
     const svg = svgIn("#ex-tdm", W, H);
     const x = d3.scaleLinear().domain([0, 1]).range([left, W - right]);
     svg.append("line").attr("x1", x(0.5)).attr("x2", x(0.5)).attr("y1", 0).attr("y2", H - 26).attr("stroke", css("--accent")).attr("stroke-width", 1);
@@ -647,22 +734,7 @@
     go(0);
   }
 
-  /* ---------- theme, nav, reveal, copy ---------- */
-  function initTheme() {
-    let saved = null;
-    try { saved = localStorage.getItem("theme"); } catch (e) { saved = null; }
-    const asked = (location.search.match(/[?&]theme=(light|dark)\b/) || [])[1];      // ?theme=dark for a link or a screenshot
-    if (asked) saved = asked;
-    if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
-    $("#theme-toggle").addEventListener("click", () => {
-      const cur = document.documentElement.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      const next = cur === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (e) { /* storage unavailable */ }
-      renderAll();
-    });
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => renderAll());
-  }
+  /* ---------- nav, reveal, copy ---------- */
   function initNav() {
     const nav = $("#nav");
     const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 10);
@@ -691,7 +763,7 @@
   /* ---------- wiring ---------- */
   function renderAll() {
     renderScale(); renderPrints(); renderForest(); renderDumbbell(); renderOverlap(); renderSlope();
-    renderIceberg(); renderCurve(); renderCost(); renderDose(); renderEce(); renderIdentity(); renderFormats(); renderOrders(); renderExample();
+    renderIceberg(); renderCurve(); renderCost(); renderDose(); renderEce(); renderIdentity(); renderFormats(); renderOrders(); renderExample(); renderReactions();
     legend("#forest-legend", [...kindLegend(), { html: '<i class="lg-dot"></i>', label: "bias" }, { html: '<i class="lg-ring"></i>', label: "unclear" }, { html: '<i class="lg-faint"></i>', label: "no bias" }]);
     legend("#dumbbell-legend", kindLegend());
     legend("#slope-legend", kindLegend());
@@ -699,12 +771,12 @@
   }
   function init() {
     renderTests();
-    initTheme(); initNav(); initReveal(); initCopy(); initSlider();
+    initNav(); initMore(); initDialog(); initReveal(); initCopy(); initSlider();
     const testItems = tests.map((t) => ({ key: t.key, label: t.name, ours: t.ours }));
     chips("#forest-chips", testItems, forestTest, (k) => { forestTest = k; renderForest(); });
     chips("#slope-chips", SLOPES, slopeKey, (k) => { slopeKey = k; renderSlope(); });
     chips("#curve-chips", [{ key: "others", label: "All but sentiment and authority (on better)" }, ...testItems.filter((t) => t.key !== "fallacy")], curveKey, (k) => { curveKey = k; renderCurve(); });
-    chips("#ex-chips", testItems, exKey, (k) => { exKey = k; renderExample(); });
+    reactCtl = chips("#react-chips", testItems, exKey, (k) => selectExample(k));
     initScale();
     renderAll();
     let rt = null;
