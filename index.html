@@ -29,7 +29,6 @@
       <a href="#recommendations">Recommendations</a>
       <a href="#benchmark">Benchmark</a>
       <a href="#figures">Figures</a>
-      <a href="#cite">Citation</a>
     </div>
     <a class="nav-paper" href="https://arxiv.org/abs/2610.18122">Paper</a>
   </div>
@@ -56,6 +55,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.7"/><path d="M4.5 5.5v13c0 1.5 3.4 2.7 7.5 2.7s7.5-1.2 7.5-2.7v-13M4.5 12c0 1.5 3.4 2.7 7.5 2.7s7.5-1.2 7.5-2.7"/></svg>Data</a>
           <a class="btn" href="#cite">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 17.5V12c0-3 1.5-5 4.5-5.5M5 12h4.5v5.5H5M14 17.5V12c0-3 1.5-5 4.5-5.5M14 12h4.5v5.5H14"/></svg>Cite</a>
+          <button class="btn btn-research" id="research-open" type="button" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6.5h11v13H4zM8 3.5h12v13"/><path d="M7 10.5h5M7 13.5h5"/></svg>More research</button>
         </div>
         <p class="lead">Typed decision models (TDMs) answer a question by returning a probability for each allowed option, which makes them fast and cheap judges. We test whether they share the biases of LLM judges. They do, and in several tests more than the LLM judges of 2026.</p>
       </div>
@@ -69,31 +70,6 @@
           <div class="chips" id="scale-chips" role="group" aria-label="Cue"></div>
         </figure>
 
-        <div class="more" id="more">
-          <button class="more-toggle" id="more-toggle" type="button" aria-expanded="false" aria-controls="more-panel">
-            <span>More research by Fabian Lukassen</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="more-panel" id="more-panel" hidden>
-            <div class="more-feature">
-              <span class="note-label">Platform and paper</span>
-              <a class="pub-title" href="https://cafe-ai.de/">CAFE: Compound AI Factorial Evaluation</a>
-              <p>A design-of-experiments platform for compound AI systems such as RAG pipelines, agents and LLM chains. It varies the factors of a system with replication and attributes quality to the components that drive it, with effect sizes and p-values.</p>
-              <p class="more-links"><a href="https://cafe-ai.de/">cafe-ai.de</a> · <a href="https://arxiv.org/abs/2607.10380">arXiv:2607.10380</a></p>
-            </div>
-            <ul class="pubs">
-              <li><a class="pub-title" href="https://arxiv.org/abs/2605.26770">Quality Without Usefulness: LLM-Generated XAI Narratives as Trust Heuristics Rather Than Decision Aids</a>
-                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, A. Silbersdorff, B. Saefken, T. Kneib · 2026</div></li>
-              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02224">From XAI to Stories: A Factorial Study of LLM-Generated Explanation Quality</a>
-                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, B. Saefken, T. Kneib · 2026</div></li>
-              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02957">LLM-Augmented Changepoint Detection: A Framework for Ensemble Detection and Automated Explanation</a>
-                <div class="pub-meta">F. Lukassen, C. Weisser, M. Schlee, M. Kumar, A. Thielmann, B. Saefken, et al. · 2026</div></li>
-              <li><a class="pub-title" href="https://arxiv.org/abs/2608.11753">LabelFusion-TS: Fusing Large Language Models, Transformer Encoders, and Financial Time Series for Monetary-Policy Stance Classification</a>
-                <div class="pub-meta">M. Schlee, F. Lukassen, C. Weisser · 2026</div></li>
-            </ul>
-            <p class="more-links"><a href="https://scholar.google.com/citations?user=wwSQNeAAAAAJ&amp;hl=en">All publications on Google Scholar</a></p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -107,6 +83,26 @@
 </header>
 
 <main>
+
+<!-- citation -->
+<section class="cite-top" id="cite">
+  <div class="wrap">
+    <div class="cite-head"><span class="sec-kicker">Citation</span></div>
+    <div class="cite-box reveal">
+<pre id="bibtex"><code>@misc{lukassen2026cheap,
+  title         = {Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges},
+  author        = {Lukassen, Fabian and Weisser, Christoph and Silbersdorff, Alexander},
+  year          = {2026},
+  eprint        = {2610.18122},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2610.18122}
+}</code></pre>
+      <button class="btn copy" id="copy" type="button">Copy</button>
+    </div>
+  </div>
+</section>
+
 
 <!-- 1 · motivation -->
 <section class="section" id="motivation">
@@ -416,25 +412,6 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
   </div>
 </section>
 
-<!-- citation -->
-<section class="section" id="cite">
-  <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 9</div><h2>Citation</h2></div>
-    <div class="cite-box reveal">
-<pre id="bibtex"><code>@misc{lukassen2026cheap,
-  title         = {Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges},
-  author        = {Lukassen, Fabian and Weisser, Christoph and Silbersdorff, Alexander},
-  year          = {2026},
-  eprint        = {2610.18122},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CL},
-  url           = {https://arxiv.org/abs/2610.18122}
-}</code></pre>
-      <button class="btn copy" id="copy" type="button">Copy</button>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer>
@@ -454,6 +431,32 @@ d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
     <button class="arrow" id="pd-prev" type="button" aria-label="Previous judge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
     <span class="figcap">Labels give the excess per 100 judgments.</span>
     <button class="arrow" id="pd-next" type="button" aria-label="Next judge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+</dialog>
+
+<dialog class="research-dialog" id="research-dialog" aria-labelledby="rd-title">
+  <div class="pd-head">
+    <div><span class="fig-label">Fabian Lukassen</span><h3 id="rd-title">More research</h3></div>
+    <button class="pd-close" id="rd-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="rd-body">
+            <div class="more-feature">
+              <span class="note-label">Platform and paper</span>
+              <a class="pub-title" href="https://cafe-ai.de/">CAFE: Compound AI Factorial Evaluation</a>
+              <p>A design-of-experiments platform for compound AI systems such as RAG pipelines, agents and LLM chains. It varies the factors of a system with replication and attributes quality to the components that drive it, with effect sizes and p-values.</p>
+              <p class="more-links"><a href="https://cafe-ai.de/">cafe-ai.de</a> · <a href="https://arxiv.org/abs/2607.10380">arXiv:2607.10380</a></p>
+            </div>
+            <ul class="pubs">
+              <li><a class="pub-title" href="https://arxiv.org/abs/2605.26770">Quality Without Usefulness: LLM-Generated XAI Narratives as Trust Heuristics Rather Than Decision Aids</a>
+                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, A. Silbersdorff, B. Saefken, T. Kneib · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02224">From XAI to Stories: A Factorial Study of LLM-Generated Explanation Quality</a>
+                <div class="pub-meta">F. Lukassen, J. Herrmann, C. Weisser, B. Saefken, T. Kneib · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2601.02957">LLM-Augmented Changepoint Detection: A Framework for Ensemble Detection and Automated Explanation</a>
+                <div class="pub-meta">F. Lukassen, C. Weisser, M. Schlee, M. Kumar, A. Thielmann, B. Saefken, et al. · 2026</div></li>
+              <li><a class="pub-title" href="https://arxiv.org/abs/2608.11753">LabelFusion-TS: Fusing Large Language Models, Transformer Encoders, and Financial Time Series for Monetary-Policy Stance Classification</a>
+                <div class="pub-meta">M. Schlee, F. Lukassen, C. Weisser · 2026</div></li>
+            </ul>
+            <p class="more-links"><a href="https://scholar.google.com/citations?user=wwSQNeAAAAAJ&amp;hl=en">All publications on Google Scholar</a></p>
   </div>
 </dialog>
 

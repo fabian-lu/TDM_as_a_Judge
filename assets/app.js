@@ -277,13 +277,13 @@
     dlg.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft") step_(-1); if (e.key === "ArrowRight") step_(1); });
   }
 
-  /* ---------- research popover ---------- */
+  /* ---------- research dialog ---------- */
   function initMore() {
-    const btn = $("#more-toggle"), panel = $("#more-panel");
-    const set = (open) => { btn.setAttribute("aria-expanded", String(open)); panel.hidden = !open; };
-    btn.addEventListener("click", (e) => { e.stopPropagation(); set(panel.hidden); });
-    document.addEventListener("click", (e) => { if (!panel.hidden && !$("#more").contains(e.target)) set(false); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) { set(false); btn.focus(); } });
+    const dlg = $("#research-dialog");
+    const close = () => { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); };
+    $("#research-open").addEventListener("click", () => { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); });
+    $("#rd-close").addEventListener("click", close);
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) close(); });
   }
 
   /* ---------- Fig. 2: forest plot per test ---------- */
@@ -705,7 +705,6 @@
     { img: "assets/fig/excess_heatmap.png", title: "Every judge, every test", text: "The excess of each judge in each test: verdicts changed per 100 beyond those a plain repetition changes. Framed cells are biases, whose whole 95% interval lies above 5. On the right, the number of tests with a bias per judge. Figure 1 of the paper." },
     { img: "assets/fig/probabilities.png", title: "What the probabilities show", text: "(a) How far each cue moves the probability of the response it targets. (b) Prompts on which the median TDM's verdict flips, or stays while its probability moves by more than 0.10. (c) Flipped verdicts by the confidence on the original prompt. Figure 2 of the paper." },
     { img: "assets/fig/versions.png", title: "Results per version", text: "Robustness rate per version of a test: bandwagon by the claimed majority, authority by the kind of citation and the response it is on, sentiment by tone and response, and diversity by identity group. From the appendix." },
-    { img: "assets/fig/flips_by_margin.png", title: "Flips and confidence", text: "Share of flipped verdicts by the probability that the judge gave its choice on the original prompt, all TDMs pooled. The band shows the range of the eight models for the tests other than sentiment and authority (on better). From the appendix." },
     { img: "assets/fig/reliability.png", title: "Reliability diagrams", text: "Each point is one bin of the confidence with its share of correct verdicts, on the original alignment prompts. Points below the diagonal are overconfident, and the marker area grows with the number of prompts in the bin. From the appendix." },
     { img: "assets/fig/calibration_summary.png", title: "Two measures of calibration", text: "Expected calibration error and Brier score of the eight TDMs on the original prompts, alignment set (filled) and fact-related set (open). Lower is better. From the appendix." },
   ];
