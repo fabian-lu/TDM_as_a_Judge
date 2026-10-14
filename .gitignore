@@ -1,0 +1,16 @@
+# API keys
+.env
+
+# cache of every API call (tdm), large and local
+cache/
+
+# CALM, cloned separately (see external/README.md)
+external/calm/
+
+# figures and LaTeX tables written by notebooks/07_figures.ipynb
+paper/
+
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+*.rds

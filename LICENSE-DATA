@@ -1,0 +1,20 @@
+The data in data/ and tables/ of this repository (our prompts, the answers of the judges and our analysis)
+are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International licence
+(CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+The non-commercial and share-alike terms follow from ScienceQA (CC BY-NC-SA 4.0), parts of which the prompts
+contain.
+
+The prompts are built from CALM (Ye et al., ICLR 2025, https://github.com/Y0oMu/LLM-Judge-Bias-Dataset) and the
+datasets it draws on, which keep their own terms:
+
+  GSM8K                                   MIT
+  MATH                                    MIT
+  ScienceQA                               CC BY-NC-SA 4.0
+  jondurbin/truthy-dpo-v0.1               CC BY 4.0
+  jondurbin/py-dpo-v0.1                   CC BY 4.0
+  Intel/orca_dpo_pairs                    Apache 2.0
+  yleo/emerton_dpo_pairs_judge            no licence stated
+  xDAN2099/xDAN-SFT-DPO-Roleplay-NSFW-with-lf   no licence stated
+
+The answers of the LLM judges were generated through the APIs of their providers and are subject to their terms.

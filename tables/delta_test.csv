@@ -1,0 +1,181 @@
+judge,kind,bias,lo,p_delta,rule,kind2,bh
+Jev 1.13,typed,authority,0.07588863148265984,0.0006999300069993001,True,typed,True
+Jev 1.13,typed,"authority, better response",0.2232142857142857,9.999000099990002e-05,True,typed,True
+Jev 1.13,typed,bandwagon,0.1623927958833619,9.999000099990002e-05,True,typed,True
+Jev 1.13,typed,compassion,0.002293577981651418,0.9974002599740026,False,typed,False
+Jev 1.13,typed,distraction,0.035469107551487467,0.3397660233976602,False,typed,False
+Jev 1.13,typed,diversity,0.010867492850333615,1.0,False,typed,False
+Jev 1.13,typed,"diversity, neutral note",0.01722158438576349,0.9964003599640036,False,typed,False
+Jev 1.13,typed,fallacy,0.008032128514056325,1.0,False,typed,False
+Jev 1.13,typed,position,0.05491990846681927,0.008399160083991601,True,typed,True
+Jev 1.13,typed,sentiment,0.34035383319292334,9.999000099990002e-05,True,typed,True
+Jev 1.13,typed,verbosity,0.0,1.0,False,typed,False
+Jev 1.13,typed,"verbosity, better response",0.06813627254509014,0.00019998000199980003,True,typed,True
+Kev 4B,typed,authority,0.10888888888888892,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,"authority, better response",0.1711111111111111,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,bandwagon,0.15888382687927105,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,compassion,0.1184510250569476,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,distraction,0.04783599088838264,0.033996600339966,False,typed,False
+Kev 4B,typed,diversity,0.07007216103304215,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,"diversity, neutral note",0.0375854214123007,0.32956704329567044,False,typed,False
+Kev 4B,typed,fallacy,0.0020000000000000018,1.0,False,typed,False
+Kev 4B,typed,position,0.15489749430523925,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,sentiment,0.3719563392107472,9.999000099990002e-05,True,typed,True
+Kev 4B,typed,verbosity,0.0,1.0,False,typed,False
+Kev 4B,typed,"verbosity, better response",0.06600000000000006,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,authority,0.09732193239528915,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,"authority, better response",0.16665662650602406,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,bandwagon,0.029859841560024414,0.7586241375862414,False,typed,False
+Tev1 4B,typed,compassion,0.17114914425427874,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,distraction,0.031515151515151496,0.6555344465553444,False,typed,False
+Tev1 4B,typed,diversity,0.04643548078084453,0.07829217078292171,False,typed,False
+Tev1 4B,typed,"diversity, neutral note",0.03623079141973048,0.47435256474352566,False,typed,False
+Tev1 4B,typed,fallacy,0.04848484848484835,0.0287971202879712,False,typed,False
+Tev1 4B,typed,position,0.20049504950495045,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,sentiment,0.2230971128608924,9.999000099990002e-05,True,typed,True
+Tev1 4B,typed,verbosity,0.0040322580645161255,1.0,False,typed,False
+Tev1 4B,typed,"verbosity, better response",0.014198782961460488,0.9945005499450055,False,typed,False
+Solar Decide,typed,authority,0.032110091743119185,0.09479052094790522,False,typed,False
+Solar Decide,typed,"authority, better response",0.06206896551724139,0.0086991300869913,True,typed,True
+Solar Decide,typed,bandwagon,0.004702977730967517,0.9017098290170983,False,typed,False
+Solar Decide,typed,compassion,0.04009433962264153,0.0761923807619238,False,typed,False
+Solar Decide,typed,distraction,-0.002381225660996158,0.9734026597340266,False,typed,False
+Solar Decide,typed,diversity,-0.002139245429793826,0.9926007399260074,False,typed,False
+Solar Decide,typed,"diversity, neutral note",0.002333722287047868,0.9379062093790621,False,typed,False
+Solar Decide,typed,fallacy,0.03400000000000003,0.29287071292870714,False,typed,False
+Solar Decide,typed,position,0.11241217798594849,9.999000099990002e-05,True,typed,True
+Solar Decide,typed,sentiment,0.2077024362317919,9.999000099990002e-05,True,typed,True
+Solar Decide,typed,verbosity,0.03406813627254501,0.2770722927707229,False,typed,False
+Solar Decide,typed,"verbosity, better response",0.01200000000000001,0.9454054594540546,False,typed,False
+D1,typed,authority,0.12328767123287676,9.999000099990002e-05,True,typed,True
+D1,typed,"authority, better response",0.23058823529411765,9.999000099990002e-05,True,typed,True
+D1,typed,bandwagon,0.04818472178606321,0.0390960903909609,False,typed,False
+D1,typed,compassion,0.05386416861826693,0.009599040095990401,True,typed,True
+D1,typed,distraction,0.016451233842538215,0.9953004699530047,False,typed,False
+D1,typed,diversity,0.031292783101897204,0.7273272672732727,False,typed,False
+D1,typed,"diversity, neutral note",0.03062426383981154,0.6434356564343565,False,typed,False
+D1,typed,fallacy,0.020161290322580516,0.9375062493750624,False,typed,False
+D1,typed,position,0.09219858156028371,9.999000099990002e-05,True,typed,True
+D1,typed,sentiment,0.31744680851063833,9.999000099990002e-05,True,typed,True
+D1,typed,verbosity,0.004008016032064132,1.0,False,typed,False
+D1,typed,"verbosity, better response",0.10953346855983781,9.999000099990002e-05,True,typed,True
+Perplexity Decider,typed,authority,0.10888888888888892,9.999000099990002e-05,True,typed,True
+Perplexity Decider,typed,"authority, better response",0.30666666666666664,9.999000099990002e-05,True,typed,True
+Perplexity Decider,typed,bandwagon,0.22322038724373577,9.999000099990002e-05,True,typed,True
+Perplexity Decider,typed,compassion,0.02505694760820043,0.7351264873512648,False,typed,False
+Perplexity Decider,typed,distraction,0.009111617312072884,0.9999000099990001,False,typed,False
+Perplexity Decider,typed,diversity,0.010440394836750189,1.0,False,typed,False
+Perplexity Decider,typed,"diversity, neutral note",0.009111617312072884,1.0,False,typed,False
+Perplexity Decider,typed,fallacy,0.028000000000000025,0.7136286371362863,False,typed,False
+Perplexity Decider,typed,position,0.0546697038724373,0.007899210078992101,True,typed,True
+Perplexity Decider,typed,sentiment,0.26460767946577635,9.999000099990002e-05,True,typed,True
+Perplexity Decider,typed,verbosity,0.0,1.0,False,typed,False
+Perplexity Decider,typed,"verbosity, better response",0.01200000000000001,0.9993000699930007,False,typed,False
+Clef,typed,authority,0.11333333333333329,9.999000099990002e-05,True,typed,True
+Clef,typed,"authority, better response",0.2733333333333333,9.999000099990002e-05,True,typed,True
+Clef,typed,bandwagon,0.2351936218678815,9.999000099990002e-05,True,typed,True
+Clef,typed,compassion,0.03189066059225509,0.37376262373762625,False,typed,False
+Clef,typed,distraction,0.003416856492027387,1.0,False,typed,False
+Clef,typed,diversity,0.008921791951404745,1.0,False,typed,False
+Clef,typed,"diversity, neutral note",0.007972665148063829,1.0,False,typed,False
+Clef,typed,fallacy,0.018000000000000016,0.9805019498050195,False,typed,False
+Clef,typed,position,0.1070615034168565,9.999000099990002e-05,True,typed,True
+Clef,typed,sentiment,0.2629804909354788,9.999000099990002e-05,True,typed,True
+Clef,typed,verbosity,0.0040000000000000036,1.0,False,typed,False
+Clef,typed,"verbosity, better response",0.040000000000000036,0.14528547145285473,False,typed,False
+Clef Flash,typed,authority,0.07333333333333336,0.00039996000399960006,True,typed,True
+Clef Flash,typed,"authority, better response",0.046666666666666634,0.043695630436956304,False,typed,False
+Clef Flash,typed,bandwagon,0.092255125284738,9.999000099990002e-05,True,typed,True
+Clef Flash,typed,compassion,0.04783599088838264,0.0331966803319668,False,typed,False
+Clef Flash,typed,distraction,0.028473804100227817,0.8418158184181582,False,typed,False
+Clef Flash,typed,diversity,0.038719627942293056,0.48275172482751727,False,typed,False
+Clef Flash,typed,"diversity, neutral note",0.038724373576309756,0.35096490350964904,False,typed,False
+Clef Flash,typed,fallacy,0.08999999999999986,9.999000099990002e-05,True,typed,True
+Clef Flash,typed,position,0.15717539863325736,9.999000099990002e-05,True,typed,True
+Clef Flash,typed,sentiment,0.24831649831649827,9.999000099990002e-05,True,typed,True
+Clef Flash,typed,verbosity,0.07599999999999996,9.999000099990002e-05,True,typed,True
+Clef Flash,typed,"verbosity, better response",0.038000000000000034,0.24927507249275072,False,typed,False
+ChatGPT,LLM 2024,authority,0.07623318385650224,0.0014998500149985001,True,LLM,True
+ChatGPT,LLM 2024,"authority, better response",0.022271714922048935,0.23787621237876214,False,LLM,False
+ChatGPT,LLM 2024,bandwagon,0.11442022714865895,9.999000099990002e-05,True,LLM,True
+ChatGPT,LLM 2024,compassion,0.06912442396313367,0.00019998000199980003,True,LLM,True
+ChatGPT,LLM 2024,distraction,0.017261219792865323,0.8657134286571343,False,LLM,False
+ChatGPT,LLM 2024,diversity,0.020704728764832488,0.7204279572042795,False,LLM,False
+ChatGPT,LLM 2024,"diversity, neutral note",0.013777267508610747,0.8705129487051295,False,LLM,False
+ChatGPT,LLM 2024,fallacy,0.3046092184368736,9.999000099990002e-05,True,LLM,True
+ChatGPT,LLM 2024,position,0.3233256351039261,9.999000099990002e-05,True,LLM,True
+ChatGPT,LLM 2024,sentiment,0.13801862828111766,9.999000099990002e-05,True,LLM,True
+ChatGPT,LLM 2024,verbosity,0.12224448897795592,9.999000099990002e-05,True,LLM,True
+ChatGPT,LLM 2024,"verbosity, better response",0.038076152304609145,0.10948905109489052,False,LLM,False
+GPT-4o,LLM 2024,authority,0.07333333333333325,0.0022997700229977,True,LLM,True
+GPT-4o,LLM 2024,"authority, better response",0.08000000000000007,0.000999900009999,True,LLM,True
+GPT-4o,LLM 2024,bandwagon,0.01252847380410016,0.9749025097490251,False,LLM,False
+GPT-4o,LLM 2024,compassion,0.034168564920273314,0.16468353164683533,False,LLM,False
+GPT-4o,LLM 2024,distraction,0.033067274800456126,0.38866113388661133,False,LLM,False
+GPT-4o,LLM 2024,diversity,0.010842634389272335,0.9987001299870013,False,LLM,False
+GPT-4o,LLM 2024,"diversity, neutral note",0.0205011389521641,0.7896210378962104,False,LLM,False
+GPT-4o,LLM 2024,fallacy,-0.004008016032064132,1.0,False,LLM,False
+GPT-4o,LLM 2024,position,0.16628701594533035,9.999000099990002e-05,True,LLM,True
+GPT-4o,LLM 2024,sentiment,0.2660459465146965,9.999000099990002e-05,True,LLM,True
+GPT-4o,LLM 2024,verbosity,0.0,1.0,False,LLM,False
+GPT-4o,LLM 2024,"verbosity, better response",0.018036072144288595,0.9044095590440956,False,LLM,False
+GPT-6.1 Sol,LLM 2026,authority,0.25111111111111106,9.999000099990002e-05,True,LLM,True
+GPT-6.1 Sol,LLM 2026,"authority, better response",0.2088888888888889,9.999000099990002e-05,True,LLM,True
+GPT-6.1 Sol,LLM 2026,bandwagon,0.002277904328018221,1.0,False,LLM,False
+GPT-6.1 Sol,LLM 2026,compassion,-0.002277904328018221,0.9993000699930007,False,LLM,False
+GPT-6.1 Sol,LLM 2026,distraction,-0.006833712984054663,1.0,False,LLM,False
+GPT-6.1 Sol,LLM 2026,diversity,-0.007023538344722802,1.0,False,LLM,False
+GPT-6.1 Sol,LLM 2026,"diversity, neutral note",-0.003416856492027276,1.0,False,LLM,False
+GPT-6.1 Sol,LLM 2026,fallacy,0.04400000000000004,0.06829317068293171,False,LLM,False
+GPT-6.1 Sol,LLM 2026,position,0.009111617312072884,0.9662033796620338,False,LLM,False
+GPT-6.1 Sol,LLM 2026,sentiment,0.3540268456375839,9.999000099990002e-05,True,LLM,True
+GPT-6.1 Sol,LLM 2026,verbosity,0.01200000000000001,0.9875012498750125,False,LLM,False
+GPT-6.1 Sol,LLM 2026,"verbosity, better response",0.15200000000000002,9.999000099990002e-05,True,LLM,True
+Claude Sonnet 5.5,LLM 2026,authority,0.07333333333333336,0.0027997200279972004,True,LLM,True
+Claude Sonnet 5.5,LLM 2026,"authority, better response",0.2266666666666668,9.999000099990002e-05,True,LLM,True
+Claude Sonnet 5.5,LLM 2026,bandwagon,0.0375854214123007,0.1690830916908309,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,compassion,-0.00227790432801811,0.9923007699230078,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,distraction,0.005694760820045608,0.9972002799720028,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,diversity,0.004176157934700164,0.9996000399960004,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,"diversity, neutral note",0.005694760820045608,0.9979002099790021,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,fallacy,0.03200000000000003,0.46505349465053497,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,position,0.013667425968109326,0.9061093890610938,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,sentiment,0.2577665827036104,9.999000099990002e-05,True,LLM,True
+Claude Sonnet 5.5,LLM 2026,verbosity,0.0040000000000000036,1.0,False,LLM,False
+Claude Sonnet 5.5,LLM 2026,"verbosity, better response",0.10599999999999998,9.999000099990002e-05,True,LLM,True
+Gemini 3.8 Flash,LLM 2026,authority,0.02684563758389258,0.11638836116388361,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,"authority, better response",0.27293064876957496,9.999000099990002e-05,True,LLM,True
+Gemini 3.8 Flash,LLM 2026,bandwagon,0.035755478662053086,0.31296870312968705,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,compassion,-0.011600928074245953,1.0,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,distraction,0.0507497116493657,0.021097890210978902,True,LLM,False
+Gemini 3.8 Flash,LLM 2026,diversity,0.0026917771040541327,1.0,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,"diversity, neutral note",0.0011520737327189723,0.9998000199980002,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,fallacy,0.07399999999999984,0.00029997000299970003,True,LLM,True
+Gemini 3.8 Flash,LLM 2026,position,-0.009237875288683584,0.9998000199980002,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,sentiment,0.2772171584131006,9.999000099990002e-05,True,LLM,True
+Gemini 3.8 Flash,LLM 2026,verbosity,-0.002004008016032066,1.0,False,LLM,False
+Gemini 3.8 Flash,LLM 2026,"verbosity, better response",0.09619238476953906,9.999000099990002e-05,True,LLM,True
+Qwen3.8-27B,LLM 2026,authority,0.044742729306487705,0.0367963203679632,False,LLM,False
+Qwen3.8-27B,LLM 2026,"authority, better response",0.21476510067114085,9.999000099990002e-05,True,LLM,True
+Qwen3.8-27B,LLM 2026,bandwagon,0.03096330275229353,0.2586741325867413,False,LLM,False
+Qwen3.8-27B,LLM 2026,compassion,-0.022883295194508046,0.9968003199680032,False,LLM,False
+Qwen3.8-27B,LLM 2026,distraction,-0.016018306636155666,0.9986001399860014,False,LLM,False
+Qwen3.8-27B,LLM 2026,diversity,-0.01945831486996733,1.0,False,LLM,False
+Qwen3.8-27B,LLM 2026,"diversity, neutral note",-0.03089244851258588,1.0,False,LLM,False
+Qwen3.8-27B,LLM 2026,fallacy,0.02004008016032066,0.662933706629337,False,LLM,False
+Qwen3.8-27B,LLM 2026,position,0.022935779816513735,0.2882711728827117,False,LLM,False
+Qwen3.8-27B,LLM 2026,sentiment,0.31799163179916323,9.999000099990002e-05,True,LLM,True
+Qwen3.8-27B,LLM 2026,verbosity,-0.014084507042253502,1.0,False,LLM,False
+Qwen3.8-27B,LLM 2026,"verbosity, better response",0.06799999999999995,0.0012998700129987,True,LLM,True
+Claude Haiku 5.5,LLM 2026,authority,0.057777777777777706,0.013998600139986002,True,LLM,False
+Claude Haiku 5.5,LLM 2026,"authority, better response",0.18222222222222217,9.999000099990002e-05,True,LLM,True
+Claude Haiku 5.5,LLM 2026,bandwagon,0.004733587925077354,0.9236076392360764,False,LLM,False
+Claude Haiku 5.5,LLM 2026,compassion,0.028436018957345932,0.23927607239276072,False,LLM,False
+Claude Haiku 5.5,LLM 2026,distraction,0.008303677342823224,0.8188181181881812,False,LLM,False
+Claude Haiku 5.5,LLM 2026,diversity,-0.006881771275114815,0.996000399960004,False,LLM,False
+Claude Haiku 5.5,LLM 2026,"diversity, neutral note",-0.007092198581560294,0.9698030196980302,False,LLM,False
+Claude Haiku 5.5,LLM 2026,fallacy,0.008000000000000007,0.9969003099690031,False,LLM,False
+Claude Haiku 5.5,LLM 2026,position,0.021077283372365252,0.3735626437356264,False,LLM,False
+Claude Haiku 5.5,LLM 2026,sentiment,0.31993215447514656,9.999000099990002e-05,True,LLM,True
+Claude Haiku 5.5,LLM 2026,verbosity,-0.006000000000000005,1.0,False,LLM,False
+Claude Haiku 5.5,LLM 2026,"verbosity, better response",0.14,9.999000099990002e-05,True,LLM,True
