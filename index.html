@@ -43,7 +43,8 @@
         <p class="subtitle">Typed Decision Models as Judges</p>
         <p class="authors">
           <a href="https://scholar.google.com/citations?user=wwSQNeAAAAAJ&amp;hl=en">Fabian Lukassen</a><sup>1</sup>,&nbsp;
-          Christoph Weisser<sup>2</sup>,&nbsp; Alexander Silbersdorff<sup>1</sup>
+          <a href="https://scholar.google.com/citations?user=YpwYTioAAAAJ&amp;hl=de">Christoph Weisser</a><sup>2</sup>,&nbsp;
+          <a href="https://scholar.google.com/citations?user=pgMVlQUAAAAJ&amp;hl=de">Alexander Silbersdorff</a><sup>1</sup>
         </p>
         <p class="affil"><span><sup>1</sup>University of Göttingen</span> <span><sup>2</sup>Bielefeld University of Applied Sciences and Arts (HSBI)</span></p>
         <div class="actions">
@@ -58,13 +59,13 @@
           <button class="btn btn-research" id="research-open" type="button" aria-haspopup="dialog">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6.5h11v13H4zM8 3.5h12v13"/><path d="M7 10.5h5M7 13.5h5"/></svg>More research</button>
         </div>
-        <p class="lead">Typed decision models (TDMs) answer a question by returning a probability for each allowed option, which makes them fast and cheap judges. We test whether they share the biases of LLM judges. They do, and in several tests more than the LLM judges of 2026.</p>
+        <p class="lead-intro">Large language models (LLMs) are widely used as judges, for example to decide which of two answers is better. They are slow and costly for this, since they generate text, and their verdicts are known to change with cues that should not matter, such as the order of the answers.</p>
+        <p class="lead">Typed decision models (TDMs) answer a question by returning a probability for each allowed option, which makes them fast and cheap judges. We test whether they share the biases of LLM judges. They do, and in several tests more than LLM judges.</p>
       </div>
 
       <div class="hero-side">
         <figure class="scale-card" aria-labelledby="scale-title">
           <p class="scale-q" id="scale-title">Effect of a cue on the median TDM</p>
-          <p class="scale-sub">Choose a cue. The beam tilts by the mean change in the probability of the answer that carries it.</p>
           <svg id="scale" viewBox="0 0 520 250" role="img" aria-label="A balance that tilts by the mean change in probability of the median TDM under the selected cue"></svg>
           <div class="scale-readout" id="scale-readout" aria-live="polite"></div>
           <div class="chips" id="scale-chips" role="group" aria-label="Cue"></div>
@@ -77,7 +78,7 @@
       <div class="stat" role="listitem"><div class="stat-num">3 to 8 <small>of 12</small></div><div class="stat-text">tests bias each of the eight TDMs.</div></div>
       <div class="stat" role="listitem"><div class="stat-num">99% <small>→</small> 42%</div><div class="stat-text">accuracy of a typical TDM when the better answer is rewritten in an emotional tone.</div></div>
       <div class="stat" role="listitem"><div class="stat-num">0.95</div><div class="stat-text">correlation of the prompt effects of TDMs and 2026 LLM judges. Both flip on the same prompts.</div></div>
-      <div class="stat" role="listitem"><div class="stat-num">37×</div><div class="stat-text">cheaper than a 2026 LLM judge at the median, and six times as fast.</div></div>
+      <div class="stat" role="listitem"><div class="stat-num">37×</div><div class="stat-text">cheaper than a 2026 LLM judge, and six times as fast.</div></div>
     </div>
   </div>
 </header>
@@ -128,7 +129,7 @@
     <div class="sec-head"><div class="sec-kicker">§ 2</div><h2>Method</h2></div>
     <div class="grid">
       <div class="prose reveal">
-        <p>Each test takes a question with a better and a worse answer, changes one thing that should not affect the verdict, and keeps everything else fixed. A fair judge gives the same verdict before and after. We use CALM's items, prompts and templates. Where CALM's released file had attached most fake citations to the wrong items, we generated them again as CALM describes.</p>
+        <p>Each test takes a question with a better and a worse answer, changes one thing that should not affect the verdict, and keeps everything else fixed. A fair judge gives the same verdict before and after. We use CALM's items, prompts and templates.</p>
         <p>A judge may also change a verdict by chance, so we send every unperturbed prompt twice. The <em>excess</em> counts how many more verdicts the cue changes than a plain repetition does. For example, a judge that changes 20 of 100 verdicts under a cue and 2 of 100 when the prompt is simply sent again has an excess of 18. A test counts as a bias when the whole 95% interval of the excess lies above 5 per 100.</p>
         <div class="formula">E = CR − RR &nbsp;<span class="muted">consistency rate on a repetition minus robustness rate under the cue</span></div>
       </div>
@@ -361,23 +362,31 @@
 <!-- 6 · benchmark -->
 <section class="section" id="benchmark">
   <div class="wrap">
-    <div class="sec-head"><div class="sec-kicker">§ 6</div><h2>Benchmark and code</h2></div>
+    <div class="sec-head"><div class="sec-kicker">§ 6</div><h2>Testing your own judge</h2></div>
     <div class="grid">
       <div class="prose reveal">
-        <p>We release all 14,223 prompts and every answer of the fifteen judges, with their probabilities, full replies, costs and timings. The prompts can be sent to any judge that compares two answers, and no code from the repository is needed to use them.</p>
-<pre><code>import pandas as pd
+        <p>The benchmark consists of the 14,223 prompts of the twelve tests. To test a judge, send it every prompt, each original prompt twice, and compare its verdicts. Our code computes the excess per test, and the answers of our fifteen judges serve as a reference. Install <code>code/requirements.txt</code> and run the examples from the <code>code/</code> folder of the <a href="https://github.com/fabian-lu/TDM_as_a_Judge">repository</a>.</p>
+        <h3><span class="h-num">6.1</span>Any judge</h3>
+        <p>Each prompt is CALM's judge prompt and asks for the verdict as <code>[[A]]</code> or <code>[[B]]</code>. Collect one verdict per request, then compute the excess:</p>
+<pre><code>from judgebias import design, metrics, run
 
-prompts = pd.read_json("data/prompts.jsonl.gz", lines=True)
-jev = pd.read_json("data/answers/tdms/typesafe_jev-1.13__calm.jsonl.gz", lines=True)
-d = jev.query("repeat == 0").merge(prompts, on="id")</code></pre>
-        <p>Every perturbed prompt points to its unperturbed version, and <code>r1_label</code> says where the better answer is shown. A verdict is right if it picks that answer, and it flips if it differs from the verdict on the original. To rerun the analysis or send the prompts to another TDM or LLM judge, see the <a href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/code">code</a>.</p>
-        <table class="files">
-          <tr><td>prompts.jsonl.gz</td><td>The 14,223 prompts with their test, version and CALM's prompt string</td></tr>
-          <tr><td>answers/tdms/</td><td>Eight TDMs in three request formats</td></tr>
-          <tr><td>answers/llm_judges/</td><td>Seven LLM judges with their full replies</td></tr>
-          <tr><td>generated/</td><td>The 900 fake citations and the 500 padded better answers</td></tr>
-        </table>
-        <div class="warn"><b>Note.</b> All citations in the authority tests are fabricated on purpose, and most quotes attribute invented words to real public figures. Do not use them outside the benchmark. CALM's alignment set, and therefore our prompts, contains 44 items from a role-play dataset with sexual content.</div>
+rows = design.load_prompts()                     # the 14,223 prompts
+records = []
+for row, repeat in run.requests(rows, None):     # 15,195 requests, originals twice
+    verdict = my_judge(row["prompt"])            # your judge: "A" or "B"
+    records.append({"id": row["id"], "repeat": repeat, "choice": verdict,
+                    "p_A": 1.0 if verdict == "A" else 0.0})
+
+df = metrics.separate_additions(metrics.table(rows, records))
+print(metrics.summarize(df)[["bias", "excess", "excess_lo", "excess_hi"]])</code></pre>
+        <p>If the judge returns a probability, pass it as <code>p_A</code> instead. A test counts as a bias when <code>excess_lo</code> lies above 0.05.</p>
+        <h3><span class="h-num">6.2</span>A TDM or an LLM judge on OpenRouter</h3>
+        <p>The code can also send the prompts itself. With an OpenRouter key in <code>code/.env</code>, a TDM is tested in one line, at US$0.26 to 3.11 for the full test in October 2026, and the records go into <code>metrics.table</code> as above:</p>
+<pre><code>records, _ = run.run_model("provider/model", "calm", rows, budget_usd=5)</code></pre>
+        <p>An LLM judge is added to <code>MODELS</code> in <code>judgebias/llm_judges.py</code> and sent with <code>llm_judges.run_full</code>, as described in the <a href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/code">code README</a>.</p>
+        <h3><span class="h-num">6.3</span>Comparing with our judges</h3>
+        <p>The excess of our judges per test is in <code>code/outputs/tables/main.csv</code> for the TDMs and <code>llm_main.csv</code> for the LLM judges. Their full answers, with probabilities, replies, costs and timings, are in <code>data/answers/</code>.</p>
+        <div class="warn"><b>Note.</b> All citations in the authority tests are fabricated on purpose, and most quotes attribute invented words to real public figures.</div>
         <p><a class="btn" href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/data">Data</a> &nbsp; <a class="btn" href="https://github.com/fabian-lu/TDM_as_a_Judge/tree/main/code">Code</a></p>
       </div>
       <aside class="side reveal"><div class="note"><span class="note-label">Licences</span>Data and analysis CC BY-NC-SA 4.0, as required for material adapted from ScienceQA. Code MIT. The prompts contain material from CALM and the datasets it builds on, which keep their own terms.</div></aside>

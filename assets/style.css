@@ -81,6 +81,8 @@ a:hover { color: var(--accent); }
 .prose li { margin: 0.35em 0; }
 .prose li::marker { color: var(--accent); }
 .lead { font-size: 1.28rem; line-height: 1.55; color: var(--ink-2); }
+.lead-intro { font-size: 1.28rem; line-height: 1.55; color: var(--ink-2); margin: 0 0 0.7rem; }
+.lead-intro + .lead { margin-top: 0; }
 .dropcap::first-letter {
   font-family: var(--display); float: left; font-size: 4.1em; line-height: 0.82; padding: 0.06em 0.09em 0 0; color: var(--accent);
   font-weight: 500;
@@ -308,7 +310,7 @@ p code, li code { background: var(--paper-2); padding: 0.05em 0.3em; }
 .files td { padding: 0.45rem 0.4rem; border-bottom: 1px solid var(--rule-2); vertical-align: top; }
 .files td:first-child { font-family: var(--mono); font-size: 0.8rem; white-space: nowrap; color: var(--ink); }
 .warn { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 0.75rem 1rem; font-size: 0.93rem; margin: 0.6rem 0 1.4rem; }
-.cite-box { position: relative; max-width: 54rem; }
+.cite-box { position: relative; max-width: 54rem; margin: 0 auto; }
 .cite-box pre { padding-right: 5rem; }
 .copy { position: absolute; top: 0.5rem; right: 0.5rem; }
 .copy.btn { padding: 0.35rem 0.6rem; font-size: 0.66rem; background: var(--paper); }
@@ -395,7 +397,7 @@ button.test[aria-pressed="true"] h4::after { content: " ↓"; color: var(--accen
   .affil span { display: block; margin-left: 0 !important; }
   .actions { gap: 0.45rem; }
   .btn { padding: 0.55rem 0.75rem; font-size: 0.72rem; }
-  .lead { font-size: 1.12rem; }
+  .lead, .lead-intro { font-size: 1.12rem; }
   .scale-card { padding: 0.9rem 0.85rem; }
   .stats { margin-top: 1.8rem; }
   .stat { padding: 0.9rem 0.7rem 1rem; }
